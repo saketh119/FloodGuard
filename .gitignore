@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local env
+.env
+
+# Logs
+logs/
+*.log
+
+# VS Code
+.vscode/
+
+# Docker
+*.log
+docker-compose.override.yml

@@ -1,0 +1,6 @@
+version: "3.8"
+services:
+  app:
+    image: alpine:latest
+    command: echo "FloodGuard placeholder service"
+    restart: unless-stopped
