@@ -1,20 +1,44 @@
-# Node modules
-node_modules/
-
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+venv/
+.venv/
+.ipynb_checkpoints/
 
-# Local env
+# Node
+node_modules/
+.next/
+dist/
+build/
+
+# Environment and secrets
 .env
+.env.local
+.env.*
 
-# Logs
-logs/
-*.log
+# ML / data artifacts
+*.pkl
+*.joblib
+*.h5
+*.onnx
+vector_store/
+chroma_db/
+faiss_index/
+embeddings/
 
-# VS Code
-.vscode/
+# Database / exports
+*.sql
+*.dump
+supabase/
 
-# Docker
-*.log
+# Docker / runtime
 docker-compose.override.yml
+docker-volumes/
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
