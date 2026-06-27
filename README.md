@@ -81,3 +81,20 @@ FloodGuard/
 - [x] Dataset collection
 - [x] RAG document collection
 - [x] Repository setup
+
+## ✅ Phase Progress
+
+### Day 1 - Phase 1
+
+- [x] Reviewed project structure and dataset sources.
+- [x] Created the ML notebook scaffold in `ml/notebooks/`.
+- [x] Added `01_data_exploration.ipynb` for initial dataset inspection.
+- [x] Added `02_preprocessing.ipynb` as the preprocessing workspace.
+- [x] Added `03_model_training.ipynb` as the model training workspace.
+- [x] Documented the initial dataset audit in `docs/Dataset_Analysis.md`.
+- [x] Installed the notebook dependencies needed for exploration and analysis.
+
+### Notes
+
+- The exploration notebook is intentionally focused on understanding the raw data first.
+- No cleaning or missing-value removal has been applied yet.
