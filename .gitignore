@@ -23,10 +23,10 @@ build/
 *.joblib
 *.h5
 *.onnx
-vector_store/
-chroma_db/
-faiss_index/
-embeddings/
+# vector_store/
+# chroma_db/
+# faiss_index/
+# embeddings/
 
 # Database / exports
 *.sql
