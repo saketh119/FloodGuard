@@ -42,3 +42,4 @@ logs/
 # OS files
 .DS_Store
 Thumbs.db
+rag/chroma_db/ 
