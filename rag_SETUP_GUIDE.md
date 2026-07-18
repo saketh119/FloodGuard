@@ -1,48 +1,67 @@
-# FloodGuard RAG â€” Running Locally
+# FloodGuard RAG — Running Locally
 
-This guide is for team members who have already cloned the repo. All scripts and config files are included. You just need to set up your environment and run the two scripts.
+This guide is for team members who have already cloned the repo. All scripts and config files are included.
+
+> **The vector database (`chroma_db`) is shared separately via Google Drive** since it is too large for GitHub (296 MB). You do **not** need to run `ingest.py` yourself.
 
 ---
 
 ## Prerequisites
 
-Install these two system-level tools before anything else. They are **not** Python packages and must be installed manually.
+> **These are only required if you need to re-run `ingest.py`** (e.g. documents were updated). If you are just running the chat app (`app.py`), skip straight to Step 1.
 
-### 1. Poppler (PDF rendering)
+### Poppler (PDF rendering)
 
 1. Download the latest Windows release from [github.com/oschwartz10612/poppler-windows/releases](https://github.com/oschwartz10612/poppler-windows/releases)
 2. Extract it anywhere (e.g. `C:\Program Files\poppler-26.02.0\`)
 3. Add the `\Library\bin` subfolder to your **User PATH**:
    - Search "Environment Variables" in the Start menu
-   - Under **User variables**, select `Path` â†’ **Edit** â†’ **New**
+   - Under **User variables**, select `Path` ? **Edit** ? **New**
    - Paste: `C:\Program Files\poppler-26.02.0\Library\bin`
 4. Restart your terminal
 
-### 2. Tesseract-OCR
+### Tesseract-OCR
 
 1. Download the installer from [github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki)
 2. Run it (default install path: `C:\Program Files\Tesseract-OCR`)
 3. Restart your terminal
 
-> **Note:** The `ingest.py` script already injects the Tesseract path at runtime, so even if you forget to add it to PATH it will still work.
+---
+
+## Step 1: Download the Vector Database
+
+The `chroma_db/` folder contains the pre-built vector embeddings of all flood management documents. Download and extract it from the shared Google Drive link:
+
+> **[Download chroma_db.zip — Google Drive](#)**
+> *(Replace this placeholder with the actual Drive link)*
+
+After downloading, extract the zip so the folder structure looks like this:
+
+```
+FloodGuard/
++-- rag/
+    +-- chroma_db/       <- place it here
+        +-- chroma.sqlite3
+        +-- ...
+```
 
 ---
 
-## Step 1: Get an OpenRouter API Key
+## Step 2: Get an OpenRouter API Key
 
 The app uses a **free** LLM via [openrouter.ai](https://openrouter.ai):
 
 1. Sign up at [openrouter.ai](https://openrouter.ai)
-2. Go to **Keys** â†’ **Create Key**
+2. Go to **Keys** ? **Create Key**
 3. Copy the key (starts with `sk-or-v1-...`)
 
 ---
 
-## Step 2: Create the `.env` file
+## Step 3: Create the `.env` file
 
 Inside the `rag/` folder, create a file called `.env` with this content:
 
-```env
+```
 OPENAI_API_KEY=sk-or-v1-your-key-here
 ```
 
@@ -50,9 +69,9 @@ OPENAI_API_KEY=sk-or-v1-your-key-here
 
 ---
 
-## Step 3: Set Up the Python Environment
+## Step 4: Set Up the Python Environment
 
-Open a terminal inside `D:\FloodGuard\rag\` (or wherever you cloned it):
+Open a terminal inside `FloodGuard\rag\`:
 
 ```cmd
 python -m venv venv
@@ -60,41 +79,40 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-> This installs all dependencies including `torch`, `unstructured`, `chromadb`, and `langchain`. It may take **5â€“10 minutes** on first run.
-
----
-
-## Step 4: Run Ingestion (One-Time Only)
-
-This reads all PDFs in `datasets/rag/`, chunks them, generates embeddings, and saves the vector database locally.
-
-```cmd
-venv\Scripts\python.exe ingest.py
-```
-
-**This only needs to be done once.** The resulting `chroma_db/` folder is gitignored, so each team member must run this locally. Expect it to take **30 minutes to 2 hours** depending on CPU speed (it runs OCR on every page).
-
-You'll see output like this when it's done:
-```
-Ingestion complete. ChromaDB saved to ...\chroma_db
-```
+> This installs all dependencies including `torch`, `unstructured`, `chromadb`, and `langchain`. It may take **5-10 minutes** on first run.
 
 ---
 
 ## Step 5: Run the Chat App
-
-Once ingestion is done, launch the interactive CLI:
 
 ```cmd
 venv\Scripts\python.exe app.py
 ```
 
 Type your question and hit Enter:
+
 ```
 RAG System Ready! Type 'exit' or 'quit' to stop.
 
 Ask a question about the Flood Guidelines: what is the role of NDMA?
+
+Searching documents...
+Generating answer...
+--------------------------------------------------
+The NDMA (National Disaster Management Authority) is responsible for...
+--------------------------------------------------
 ```
+
+---
+
+## When Documents Are Updated
+
+When the team lead updates the PDF documents and re-runs ingestion, they will upload a new `chroma_db.zip` to Drive. You just need to:
+
+1. Delete your existing `rag/chroma_db/` folder
+2. Download the new zip from Drive
+3. Extract it to `rag/chroma_db/`
+4. Run `app.py` — it will immediately use the updated database
 
 ---
 
@@ -102,7 +120,8 @@ Ask a question about the Flood Guidelines: what is the role of NDMA?
 
 | Problem | Fix |
 |---|---|
-| `TesseractNotFoundError` | Restart your terminal after installing Tesseract |
+| `Vector database not found` error | Make sure you extracted `chroma_db/` into `rag/chroma_db/` (not a nested folder inside it) |
+| `TesseractNotFoundError` | Only relevant if running `ingest.py` — restart terminal after installing Tesseract |
 | `ModuleNotFoundError` for any package | Run `pip install -r requirements.txt` again |
-| `404 Model not found` on OpenRouter | The free model was retired â€” update the `model=` string in `app.py` to another active free model from [openrouter.ai/models](https://openrouter.ai/models) |
-| `FileNotFoundError` on a PDF during ingestion | Run `ingest.py` again; a file was deleted while it was running |
+| `404 Model not found` on OpenRouter | The free model was retired — update the `model=` string in `app.py` to another active free model from [openrouter.ai/models](https://openrouter.ai/models) |
+| Slow first startup | Normal — the HuggingFace embedding model is loading from disk into RAM on first run |
