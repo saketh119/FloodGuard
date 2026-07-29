@@ -1,0 +1,74 @@
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Light palette */
+  --bg-app:       #f1f5f9;
+  --bg-card:      #ffffff;
+  --bg-sidebar:   #0f172a;
+  --bg-input:     #f8fafc;
+
+  --text-primary:   #0f172a;
+  --text-secondary: #64748b;
+  --text-muted:     #94a3b8;
+  --text-inv:       #ffffff;
+
+  --brand:        #2563eb;
+  --brand-hover:  #1d4ed8;
+  --brand-subtle: #eff6ff;
+
+  --success:      #10b981;
+  --success-sub:  #ecfdf5;
+  --warning:      #f59e0b;
+  --warning-sub:  #fffbeb;
+  --danger:       #ef4444;
+  --danger-sub:   #fef2f2;
+
+  --border:       #e2e8f0;
+  --radius-sm:    8px;
+  --radius-md:    14px;
+  --radius-lg:    20px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+
+  --sidebar-w: 256px;
+  --header-h:  68px;
+  --transition: 0.2s cubic-bezier(.4,0,.2,1);
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --bg-app:       #070c16;
+  --bg-card:      #0f172a;
+  --bg-input:     #1e293b;
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+  --border:       #1e293b;
+  --brand-subtle: rgba(37,99,235,.15);
+  --success-sub:  rgba(16,185,129,.12);
+  --warning-sub:  rgba(245,158,11,.12);
+  --danger-sub:   rgba(239,68,68,.12);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg-app);
+  color: var(--text-primary);
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--transition), color var(--transition);
+}
+#root { height: 100%; display: flex; }
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+input { font-family: var(--font); }
+ul { list-style: none; }
