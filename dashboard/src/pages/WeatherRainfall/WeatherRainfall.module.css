@@ -1,0 +1,32 @@
+.page { padding: 28px; display: flex; flex-direction: column; gap: 24px; max-width: 1100px; margin: 0 auto; }
+.pageHeader {}
+.title { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+.section {}
+.sectionTitle { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.sectionSub { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+
+.tilesGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px 20px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm); }
+.tileIcon { flex-shrink: 0; }
+.tileBody { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.tileLabel { font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .4px; }
+.tileValue { font-size: 20px; font-weight: 800; }
+.tileSub   { font-size: 11px; color: var(--text-muted); }
+
+.tableWrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+.table { width: 100%; border-collapse: collapse; }
+.table th { background: var(--bg-input); padding: 12px 18px; text-align: left; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .4px; border-bottom: 1px solid var(--border); }
+.table td { padding: 13px 18px; font-size: 13px; color: var(--text-primary); border-bottom: 1px solid var(--border); }
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: var(--bg-input); }
+.tdPeriod { font-weight: 700; }
+.catBadge { background: var(--brand-subtle); color: var(--brand); padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+
+.awsCard { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+.awsRow { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 12px 20px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.awsRow:last-child { border-bottom: none; }
+.awsRow span:first-child { font-weight: 700; color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
+.awsRow span:last-child { color: var(--text-primary); }
+
+@media(max-width:900px) { .tilesGrid { grid-template-columns: 1fr 1fr; } }

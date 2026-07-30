@@ -1,0 +1,50 @@
+.page { padding: 28px; display: flex; flex-direction: column; gap: 24px; max-width: 1200px; margin: 0 auto; }
+
+.pageHeader { display: flex; align-items: flex-start; justify-content: space-between; }
+.title { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
+.subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+.refreshBtn { display: flex; align-items: center; gap: 6px; padding: 9px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; color: var(--text-secondary); background: var(--bg-card); cursor: pointer; transition: all var(--transition); }
+.refreshBtn:hover { border-color: var(--brand); color: var(--brand); }
+
+.summaryStrip { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.summaryItem { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow-sm); }
+.summaryVal { font-size: 24px; font-weight: 800; color: var(--text-primary); }
+.summaryLbl { font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .4px; }
+
+.filterRow { display: flex; align-items: center; gap: 8px; }
+.filterBtn { padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text-secondary); background: var(--bg-card); cursor: pointer; transition: all var(--transition); }
+.filterBtn:hover { border-color: var(--brand); color: var(--brand); }
+.filterActive { background: var(--brand); color: #fff; border-color: var(--brand); }
+.count { margin-left: auto; font-size: 13px; color: var(--text-muted); }
+
+.eventList { display: flex; flex-direction: column; gap: 10px; }
+.skeletonList { display: flex; flex-direction: column; gap: 10px; }
+.skeleton { height: 80px; background: linear-gradient(90deg,var(--border) 25%,var(--bg-card) 50%,var(--border) 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: var(--radius-md); }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+.empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 60px 0; color: var(--text-secondary); text-align: center; }
+.empty strong { font-size: 16px; color: var(--text-primary); }
+.error { background: var(--danger-sub); border: 1px solid var(--danger); color: var(--danger); padding: 14px 20px; border-radius: var(--radius-md); font-weight: 600; font-size: 13px; }
+
+.nowcastCard { background: var(--warning-sub); border: 1px solid var(--warning); border-radius: var(--radius-md); padding: 18px 22px; }
+.nowcastCard strong { font-size: 14px; display: block; margin-bottom: 8px; }
+.nowcastCard p { font-size: 13px; color: var(--text-primary); line-height: 1.6; }
+.nowcastCard span { font-size: 11px; color: var(--text-muted); margin-top: 8px; display: block; }
+
+.warningSection {}
+.sectionTitle { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.warningGrid { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+.warningCard { border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+.warningDay { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.warningColor { font-size: 14px; font-weight: 700; }
+.warningCodes { display: flex; flex-direction: column; gap: 4px; }
+.warnCode { font-size: 11px; color: var(--text-secondary); }
+
+.danger { background: var(--danger-sub); border-color: var(--danger); }
+.danger .warningColor { color: var(--danger); }
+.warning { background: var(--warning-sub); border-color: var(--warning); }
+.warning .warningColor { color: var(--warning); }
+.success { background: var(--success-sub); border-color: var(--success); }
+.success .warningColor { color: var(--success); }
+
+@media(max-width:900px) { .summaryStrip { grid-template-columns:repeat(2,1fr); } .warningGrid { grid-template-columns:repeat(2,1fr); } }

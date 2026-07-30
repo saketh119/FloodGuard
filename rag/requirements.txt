@@ -1,0 +1,10 @@
+unstructured[pdf]
+langchain
+langchain-core
+langchain-openai
+langchain-community
+chromadb
+python-dotenv
+langdetect
+sentence-transformers
+langchain-huggingface

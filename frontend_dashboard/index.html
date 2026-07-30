@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flood Intelligence Platform</title>
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Left Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <i data-lucide="droplet" class="logo-icon"></i>
+      <div>
+        <h1 class="brand-name">Flood Intelligence</h1>
+        <span class="brand-subtitle">Platform</span>
+      </div>
+    </div>
+    
+    <ul class="sidebar-menu">
+      <li class="menu-item active">
+        <a href="#" class="menu-link">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="waves"></i>
+          <span>Current Floods</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="bell"></i>
+          <span>Alerts</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="line-chart"></i>
+          <span>Predictions</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="cloud-rain"></i>
+          <span>Weather & Rainfall</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="milestone"></i>
+          <span>Rivers & Reservoirs</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="file-text"></i>
+          <span>Reports</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="star"></i>
+          <span>Saved Locations</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="message-square-code"></i>
+          <span>Chat Assistant</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="sidebar-footer">
+      <div class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="settings"></i>
+          <span>Settings</span>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a href="#" class="menu-link">
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+      <div class="update-indicator">
+        <div class="pulse-dot"></div>
+        <span>Last updated: 20 Jul 2026, 10:30 AM</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <main class="main-wrapper">
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="header-title-area">
+        <button class="menu-toggle" id="toggle-sidebar">
+          <i data-lucide="menu"></i>
+        </button>
+        <div>
+          <h2 class="header-title">Dashboard</h2>
+          <span class="header-subtitle">Real-time flood intelligence and alerts</span>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <button class="action-btn" aria-label="Notifications">
+          <i data-lucide="bell"></i>
+          <span class="badge">3</span>
+        </button>
+        <button class="action-btn" id="theme-toggle" aria-label="Toggle Dark Mode">
+          <i data-lucide="moon" id="theme-icon"></i>
+        </button>
+        <div class="user-profile">
+          <div class="avatar">S</div>
+          <span class="username">Saketh</span>
+          <i data-lucide="chevron-down" style="width: 16px; height: 16px;"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Body -->
+    <div class="content-body">
+      
+      <!-- Select Location Card -->
+      <section class="card location-selector">
+        <div class="search-box">
+          <h3 class="search-label">Select Location</h3>
+          <span class="location-desc" style="text-align: left; margin-top: -6px;">Search by location or share your current location</span>
+          <div class="input-container">
+            <i data-lucide="search" class="search-icon-inside"></i>
+            <input type="text" placeholder="Search for city, district, river, or station..." class="search-input" id="location-input">
+          </div>
+          <div class="popular-tags">
+            <span class="tag-label">Popular:</span>
+            <a href="#" class="tag" data-loc="Hyderabad">Hyderabad</a>
+            <a href="#" class="tag" data-loc="Vijayawada">Vijayawada</a>
+            <a href="#" class="tag" data-loc="Guntur">Guntur</a>
+            <a href="#" class="tag" data-loc="Warangal">Warangal</a>
+            <a href="#" class="tag" data-loc="Nalgonda">Nalgonda</a>
+          </div>
+        </div>
+        
+        <div class="or-divider">or</div>
+        
+        <div class="use-location-box">
+          <i data-lucide="map-pin" style="color: var(--primary); width: 28px; height: 28px;"></i>
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <strong style="font-size: 13px;">Use My Location</strong>
+            <span class="location-desc">Share your current location to get localized flood insights</span>
+          </div>
+          <button class="btn-primary" id="btn-share-location">
+            <i data-lucide="navigation" style="width: 14px; height: 14px;"></i>
+            <span>Share Location</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Active Location Display -->
+      <section class="active-location-bar">
+        <div class="location-info">
+          <i data-lucide="map-pin" style="color: var(--primary);"></i>
+          <span id="active-location-name">Hyderabad, Telangana</span>
+          <button class="change-btn" id="change-location-trigger">Change</button>
+        </div>
+        <div class="coordinates">
+          <i data-lucide="navigation-2" style="width: 14px; height: 14px; transform: rotate(45deg);"></i>
+          <span id="active-coordinates">17.3850° N, 78.4867° E</span>
+        </div>
+      </section>
+
+      <!-- Summary Stats Row -->
+      <section class="stats-grid">
+        <!-- Card 1: Alert Level -->
+        <div class="card stat-card">
+          <div class="stat-icon-wrapper" style="background-color: var(--danger-light); color: var(--danger);">
+            <i data-lucide="alert-triangle"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Current Alert Level</span>
+            <span class="stat-value" style="color: var(--danger);" id="stat-alert-level">High</span>
+            <span class="stat-desc">Flood risk in your area</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Active Events -->
+        <div class="card stat-card">
+          <div class="stat-icon-wrapper" style="background-color: var(--warning-light); color: var(--warning);">
+            <i data-lucide="waves"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Active Flood Events</span>
+            <span class="stat-value" id="stat-active-events">3</span>
+            <span class="stat-desc">In and around selected area</span>
+          </div>
+        </div>
+
+        <!-- Card 3: 24h Rainfall -->
+        <div class="card stat-card">
+          <div class="stat-icon-wrapper" style="background-color: var(--primary-light); color: var(--primary);">
+            <i data-lucide="cloud-rain"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Last 24h Rainfall</span>
+            <span class="stat-value" id="stat-rainfall">112.5 mm</span>
+            <span class="stat-desc">Moderate to Heavy</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Risk Trend -->
+        <div class="card stat-card">
+          <div class="stat-icon-wrapper" style="background-color: var(--success-light); color: var(--success);">
+            <i data-lucide="trending-up" id="stat-trend-icon" style="color: var(--danger);"></i>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Risk Trend</span>
+            <span class="stat-value" id="stat-risk-trend" style="color: var(--danger);">Increasing</span>
+            <span class="stat-desc">Next 24-48 hours</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Split Panel Grid -->
+      <div class="dashboard-split-grid">
+        
+        <!-- Active Flood Events List Panel -->
+        <section class="card">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <i data-lucide="list-todo" style="color: var(--primary);"></i>
+              <span>Active Flood Events</span>
+            </h3>
+            <button class="btn-text">View All</button>
+          </div>
+          
+          <div class="events-list" id="events-container">
+            <!-- Event 1 -->
+            <div class="event-item">
+              <div class="event-left">
+                <div class="event-icon-circle" style="background-color: var(--primary-light); color: var(--primary);">
+                  <i data-lucide="milestone"></i>
+                </div>
+                <div class="event-details">
+                  <div class="event-title-row">
+                    <span class="event-title">Musi River Rising</span>
+                    <span class="badge-status" style="background-color: var(--danger-light); color: var(--danger);">High</span>
+                  </div>
+                  <span class="event-subtitle">Musi River, Hyderabad</span>
+                  <span class="event-time">
+                    <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                    <span>Started: 20 Jul 2026, 06:30 AM</span>
+                  </span>
+                </div>
+              </div>
+              <div class="event-right">
+                <div class="event-metric">
+                  <span class="metric-value">7.2 m</span>
+                  <div class="metric-label">Water Level</div>
+                </div>
+                <i data-lucide="chevron-right" style="color: var(--text-muted);"></i>
+              </div>
+            </div>
+
+            <!-- Event 2 -->
+            <div class="event-item">
+              <div class="event-left">
+                <div class="event-icon-circle" style="background-color: var(--warning-light); color: var(--warning);">
+                  <i data-lucide="bell-ring"></i>
+                </div>
+                <div class="event-details">
+                  <div class="event-title-row">
+                    <span class="event-title">Heavy Rainfall Alert</span>
+                    <span class="badge-status" style="background-color: var(--warning-light); color: var(--warning);">Medium</span>
+                  </div>
+                  <span class="event-subtitle">Hyderabad District</span>
+                  <span class="event-time">
+                    <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                    <span>Started: 20 Jul 2026, 08:15 AM</span>
+                  </span>
+                </div>
+              </div>
+              <div class="event-right">
+                <div class="event-metric">
+                  <span class="metric-value">98.4 mm</span>
+                  <div class="metric-label">24h Rainfall</div>
+                </div>
+                <i data-lucide="chevron-right" style="color: var(--text-muted);"></i>
+              </div>
+            </div>
+
+            <!-- Event 3 -->
+            <div class="event-item">
+              <div class="event-left">
+                <div class="event-icon-circle" style="background-color: var(--danger-light); color: var(--danger);">
+                  <i data-lucide="shield-alert"></i>
+                </div>
+                <div class="event-details">
+                  <div class="event-title-row">
+                    <span class="event-title">Reservoir Inflow High</span>
+                    <span class="badge-status" style="background-color: var(--danger-light); color: var(--danger);">High</span>
+                  </div>
+                  <span class="event-subtitle">Himayat Sagar Reservoir</span>
+                  <span class="event-time">
+                    <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                    <span>Started: 19 Jul 2026, 11:45 PM</span>
+                  </span>
+                </div>
+              </div>
+              <div class="event-right">
+                <div class="event-metric">
+                  <span class="metric-value">85%</span>
+                  <div class="metric-label">Storage Level</div>
+                </div>
+                <i data-lucide="chevron-right" style="color: var(--text-muted);"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Flood Risk Prediction Panel -->
+        <section class="card">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <i data-lucide="activity" style="color: var(--primary);"></i>
+              <span>Flood Risk Prediction</span>
+            </h3>
+            <select class="prediction-select" aria-label="Forecast timeframe select">
+              <option value="5">Next 5 Days</option>
+              <option value="7">Next 7 Days</option>
+            </select>
+          </div>
+          
+          <div id="predictions-container">
+            <!-- Row 1 -->
+            <div class="prediction-row">
+              <span class="day-label">Today, 20 Jul</span>
+              <span class="badge-status" style="background-color: var(--danger-light); color: var(--danger); text-align: center;">High</span>
+              <div class="bar-container">
+                <div class="fill-bar" style="width: 75%; background-color: var(--danger);"></div>
+              </div>
+              <span class="percentage-val">75%</span>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="prediction-row">
+              <span class="day-label">Tomorrow, 21 Jul</span>
+              <span class="badge-status" style="background-color: var(--danger-light); color: var(--danger); text-align: center;">High</span>
+              <div class="bar-container">
+                <div class="fill-bar" style="width: 68%; background-color: var(--danger);"></div>
+              </div>
+              <span class="percentage-val">68%</span>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="prediction-row">
+              <span class="day-label">Tue, 22 Jul</span>
+              <span class="badge-status" style="background-color: var(--warning-light); color: var(--warning); text-align: center;">Medium</span>
+              <div class="bar-container">
+                <div class="fill-bar" style="width: 52%; background-color: var(--warning);"></div>
+              </div>
+              <span class="percentage-val">52%</span>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="prediction-row">
+              <span class="day-label">Wed, 23 Jul</span>
+              <span class="badge-status" style="background-color: var(--success-light); color: var(--success); text-align: center;">Low</span>
+              <div class="bar-container">
+                <div class="fill-bar" style="width: 28%; background-color: var(--success);"></div>
+              </div>
+              <span class="percentage-val">28%</span>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="prediction-row">
+              <span class="day-label">Thu, 24 Jul</span>
+              <span class="badge-status" style="background-color: var(--success-light); color: var(--success); text-align: center;">Low</span>
+              <div class="bar-container">
+                <div class="fill-bar" style="width: 18%; background-color: var(--success);"></div>
+              </div>
+              <span class="percentage-val">18%</span>
+            </div>
+          </div>
+          
+          <div class="prediction-footer">
+            <i data-lucide="info" style="width: 16px; height: 16px; flex-shrink: 0; color: var(--text-secondary);"></i>
+            <span>Predictions are based on current weather, river levels, and historical data.</span>
+          </div>
+        </section>
+      </div>
+
+      <!-- Bottom Status Grid Cards -->
+      <section class="bottom-cards-grid">
+        <!-- Weather Now -->
+        <div class="card bottom-card">
+          <div class="b-card-left">
+            <span class="b-card-label">Weather Now</span>
+            <span class="b-card-value" id="card-weather-val">25°C</span>
+            <span class="b-card-status" style="color: var(--primary);" id="card-weather-desc">Light Rain</span>
+          </div>
+          <div class="b-card-right" style="background-color: var(--primary-light); color: var(--primary);">
+            <i data-lucide="cloud-lightning"></i>
+          </div>
+        </div>
+
+        <!-- River Level -->
+        <div class="card bottom-card">
+          <div class="b-card-left">
+            <span class="b-card-label">River Level (Musi)</span>
+            <span class="b-card-value" id="card-river-val">7.2 m</span>
+            <span class="b-card-status" style="color: var(--danger);" id="card-river-desc">Above Warning Level</span>
+          </div>
+          <div class="b-card-right" style="background-color: var(--danger-light); color: var(--danger);">
+            <i data-lucide="droplets"></i>
+          </div>
+        </div>
+
+        <!-- Reservoirs -->
+        <div class="card bottom-card">
+          <div class="b-card-left">
+            <span class="b-card-label">Reservoirs</span>
+            <span class="b-card-value" id="card-res-val">3 / 5</span>
+            <span class="b-card-status" style="color: var(--warning);" id="card-res-desc">Above 80% Capacity</span>
+          </div>
+          <div class="b-card-right" style="background-color: var(--warning-light); color: var(--warning);">
+            <i data-lucide="database"></i>
+          </div>
+        </div>
+
+        <!-- Nearby Shelters -->
+        <div class="card bottom-card">
+          <div class="b-card-left">
+            <span class="b-card-label">Nearby Shelters</span>
+            <span class="b-card-value" id="card-shelter-val">12</span>
+            <span class="b-card-status" style="color: var(--success);" id="card-shelter-desc">Within 10 km</span>
+          </div>
+          <div class="b-card-right" style="background-color: var(--success-light); color: var(--success);">
+            <i data-lucide="home"></i>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Script -->
+  <script src="app.js"></script>
+</body>
+</html>
