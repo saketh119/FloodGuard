@@ -1,0 +1,47 @@
+.page { padding: 28px; display: flex; flex-direction: column; gap: 24px; max-width: 1100px; margin: 0 auto; }
+.pageHeader {}
+.title { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+
+.riverCard { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+.riverStatus { display: flex; align-items: center; gap: 18px; padding: 22px 24px; }
+.riverStatus.danger  { background: var(--danger-sub);  color: var(--danger); }
+.riverStatus.warning { background: var(--warning-sub); color: var(--warning); }
+.riverStatus.success { background: var(--success-sub); color: var(--success); }
+.riverName   { font-size: 13px; font-weight: 700; opacity: .8; margin-bottom: 4px; }
+.riverLevel  { font-size: 28px; font-weight: 800; }
+.riverStatus2 { font-size: 13px; font-weight: 600; opacity: .9; }
+.riverNote { display: flex; align-items: flex-start; gap: 8px; padding: 12px 20px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); }
+
+.section {}
+.sectionTitle { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+.sectionSub   { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+
+.levelPanel { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 18px; }
+.levelRow { display: flex; flex-direction: column; gap: 6px; }
+.levelLabel { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.levelTrack { height: 10px; background: var(--border); border-radius: 6px; overflow: hidden; }
+.levelFill { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+.fill_danger  { background: var(--danger); }
+.fill_warning { background: var(--warning); }
+.fill_success { background: var(--success); }
+.levelMeta { display: flex; justify-content: space-between; }
+.levelVal { font-size: 12px; color: var(--text-secondary); }
+.levelPct { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+
+.stationGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.stationCard { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-sm); }
+.stationName { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+.stationDist { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
+.stationMetrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.stMetric { display: flex; flex-direction: column; gap: 2px; }
+.stVal { font-size: 16px; font-weight: 800; color: var(--text-primary); }
+.stLbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+.stTime { font-size: 10px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 8px; }
+
+.skeletonGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.skeleton { height: 160px; background: linear-gradient(90deg,var(--border) 25%,var(--bg-card) 50%,var(--border) 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: var(--radius-md); }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+.noData { color: var(--text-muted); font-size: 13px; text-align: center; padding: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); }
+
+@media(max-width:900px) { .stationGrid { grid-template-columns: 1fr 1fr; } .skeletonGrid { grid-template-columns: 1fr 1fr; } }

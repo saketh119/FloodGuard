@@ -1,0 +1,36 @@
+.page { padding: 28px; display: flex; flex-direction: column; gap: 24px; max-width: 1100px; margin: 0 auto; }
+.pageHeader {}
+.title { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+
+.trendRow { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+.trendCard { border-radius: var(--radius-md); padding: 20px; border: 1px solid; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm); }
+.trendCard.danger  { background: var(--danger-sub);  border-color: var(--danger);  color: var(--danger); }
+.trendCard.warning { background: var(--warning-sub); border-color: var(--warning); color: var(--warning); }
+.trendCard.success { background: var(--success-sub); border-color: var(--success); color: var(--success); }
+.trendLabel { font-size: 18px; font-weight: 800; }
+.trendSub   { font-size: 11px; opacity: .8; }
+.trendCard2 { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow-sm); }
+.trendStat { font-size: 24px; font-weight: 800; color: var(--text-primary); }
+.trendStatLbl { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+
+.section {}
+.sectionTitle { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.sectionSub { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.qpfPanel { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 4px; }
+.qpfRange { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; padding-left: 4px; }
+.noData { color: var(--text-muted); font-size: 13px; text-align: center; padding: 24px; }
+
+.forecastGrid { display: grid; grid-template-columns: repeat(7,1fr); gap: 10px; }
+.forecastCard { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px; text-align: center; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 6px; }
+.fcDay { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.fcTemps { display: flex; justify-content: center; gap: 8px; }
+.fcMax { font-size: 16px; font-weight: 700; color: var(--danger); }
+.fcMin { font-size: 16px; font-weight: 700; color: var(--brand); }
+.fcDesc { font-size: 10px; color: var(--text-secondary); line-height: 1.4; }
+
+.skeleton { background: linear-gradient(90deg,var(--border) 25%,var(--bg-card) 50%,var(--border) 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: var(--radius-md); }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+.footer { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); padding: 12px 16px; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border); }
+
+@media(max-width:900px) { .trendRow { grid-template-columns: 1fr 1fr; } .forecastGrid { grid-template-columns: repeat(3,1fr); } }
