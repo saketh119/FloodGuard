@@ -8,7 +8,7 @@ import Sidebar    from './components/Sidebar/Sidebar';
 import Header     from './components/Header/Header';
 import AppRouter  from './router/AppRouter';
 
-import { useImdData }  from './hooks/useImdData';
+import { useBackendData }  from './hooks/useBackendData';
 import { LOCATIONS }   from './data/locations';
 
 const POLL_MS = 30_000;
@@ -20,7 +20,7 @@ export default function App() {
 
   const location = LOCATIONS[locationKey] ?? LOCATIONS.hyderabad;
 
-  const { data, loading, error, lastUpdated, refresh } = useImdData(location, POLL_MS);
+  const { data, loading, error, lastUpdated, refresh } = useBackendData(location, POLL_MS);
 
   // Notify on every auto-refresh after the first load
   const handleRefreshed = useCallback(() => {

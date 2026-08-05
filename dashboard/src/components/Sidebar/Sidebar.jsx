@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard, Waves, Bell, LineChart, CloudRain,
   Milestone, FileText, Star, MessageSquareCode,
-  Settings, LogOut, Droplets,
+  Settings, LogOut, Droplets, Map,
 } from 'lucide-react';
 
 const NAV = [
@@ -13,6 +13,7 @@ const NAV = [
   { icon: LineChart,           label: 'Predictions',         to: '/predictions' },
   { icon: CloudRain,           label: 'Weather & Rainfall',  to: '/weather' },
   { icon: Milestone,           label: 'Rivers & Reservoirs', to: '/rivers' },
+  { icon: Map,                 label: 'Interactive Map',     to: '/map' },
   { icon: FileText,            label: 'Reports',             to: '/reports' },
   { icon: Star,                label: 'Saved Locations',     to: '/saved' },
   { icon: MessageSquareCode,   label: 'Chat Assistant',      to: '/chat' },

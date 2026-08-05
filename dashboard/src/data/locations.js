@@ -5,6 +5,7 @@
  * lat/lng are used for real geolocation distance matching.
  * When the real IMD API goes live, only update the IDs — nothing else changes.
  */
+import { mapBackendToDash } from './backendMapper';
 
 // ── Haversine distance (km) between two lat/lng pairs ───────────────
 export function haversineKm(lat1, lng1, lat2, lng2) {
@@ -122,6 +123,9 @@ function qpfMidpoint(raw) {
  */
 export function deriveDashboardData(apiData, locationCfg) {
   if (!apiData) return null;
+  if (apiData.events !== undefined) {
+    return mapBackendToDash(apiData, locationCfg);
+  }
   const { weather, nowcast, rainfall, warning, qpf, aws } = apiData;
 
   // ── 1. Current Weather (from /current_wx) ──────────────────────────

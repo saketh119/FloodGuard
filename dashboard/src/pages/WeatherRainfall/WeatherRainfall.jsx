@@ -1,6 +1,10 @@
 import styles from './WeatherRainfall.module.css';
 import { LOCATIONS, deriveDashboardData, WX_CODE_MAP } from '../../data/locations';
 import { CloudRain, Wind, Thermometer, Droplets, Gauge, Eye } from 'lucide-react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, ReferenceLine,
+} from 'recharts';
 
 const DEPARTURE_LABEL = { E:'Excess', N:'Normal', D:'Deficient', LD:'Large Deficient', LE:'Large Excess', NR:'No Rain' };
 
@@ -16,6 +20,21 @@ function StatTile({ icon: Icon, label, value, sub, color }) {
     </div>
   );
 }
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className={styles.tooltip}>
+      <div className={styles.ttLabel}>{label}</div>
+      {payload.map(p => (
+        <div key={p.name} className={styles.ttRow}>
+          <span style={{ color: p.color }}>{p.name}</span>
+          <span>{parseFloat(p.value).toFixed(1)} mm</span>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default function WeatherRainfall({ locationKey, apiData, loading }) {
   const location = LOCATIONS[locationKey] ?? LOCATIONS.hyderabad;
@@ -44,10 +63,17 @@ export default function WeatherRainfall({ locationKey, apiData, loading }) {
     { period: 'Cumulative',actual: rf['Cumulative Actual'],normal:rf['Cumulative Normal'],dep:rf['Cumulative Departure Per'],cat:rf['Cumulative Category'] },
   ];
 
+  // Chart data: actual vs normal rainfall for bar chart
+  const chartData = rainfallRows.map(r => ({
+    name: r.period,
+    Actual: r.actual != null ? parseFloat(r.actual) : 0,
+    Normal: r.normal != null ? parseFloat(r.normal) : 0,
+  }));
+
   return (
     <div className={styles.page}>
       <div className={styles.pageHeader}>
-        <h1 className={styles.title}><CloudRain size={22} /> Weather & Rainfall</h1>
+        <h1 className={styles.title}><CloudRain size={22} /> Weather &amp; Rainfall</h1>
         <p className={styles.subtitle}>Live observations for {stationName} · {location.state}</p>
       </div>
 
@@ -64,10 +90,29 @@ export default function WeatherRainfall({ locationKey, apiData, loading }) {
         </div>
       </section>
 
+      {/* Rainfall Bar Chart */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Actual vs Normal Rainfall</h2>
+        <p className={styles.sectionSub}>District: {rf['District'] ?? location.label} · {rf['Date'] ?? new Date().toLocaleDateString('en-IN')}</p>
+        <div className={styles.chartWrap}>
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={chartData} margin={{ top: 8, right: 16, left: 0, bottom: 4 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} axisLine={{ stroke: 'var(--border)' }} tickLine={false} />
+              <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} unit=" mm" />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ fontSize: 12, paddingTop: 12 }} />
+              <Bar dataKey="Actual" fill="#2563eb" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="Normal" fill="#94a3b8" radius={[6, 6, 0, 0]} />
+              <ReferenceLine y={64.5} stroke="var(--danger)" strokeDasharray="5 3" label={{ value: 'Heavy Rain Threshold', position: 'insideTopRight', fill: 'var(--danger)', fontSize: 10 }} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </section>
+
       {/* Rainfall table */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Rainfall Statistics</h2>
-        <p className={styles.sectionSub}>District: {rf['District'] ?? location.label} · Date: {rf['Date'] ?? new Date().toLocaleDateString('en-IN')}</p>
+        <h2 className={styles.sectionTitle}>Rainfall Statistics Table</h2>
         <div className={styles.tableWrap}>
           <table className={styles.table}>
             <thead>
