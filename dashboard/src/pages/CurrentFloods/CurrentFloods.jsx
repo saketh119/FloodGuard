@@ -103,7 +103,7 @@ export default function CurrentFloods({ locationKey, apiData, loading, error, on
         <div className={styles.nowcastCard}>
           <strong>📡 IMD Nowcast Message</strong>
           <p>{dash.nowcastMsg}</p>
-          <span>Issued for: {dash.nowcastStation} · Valid until: {dash.warn?.Vupto ?? '—'}</span>
+          <span>Issued for: {dash.nowcastStation} · Valid until: {dash.nc?.Vupto ?? '—'}</span>
         </div>
       )}
 

@@ -2,6 +2,25 @@ import styles from './Predictions.module.css';
 import { LOCATIONS, deriveDashboardData } from '../../data/locations';
 import PredictionRow from '../../components/PredictionRow/PredictionRow';
 import { LineChart, Info, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, ReferenceLine,
+} from 'recharts';
+
+const RiskTooltip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null;
+  const val = payload[0]?.value ?? 0;
+  const color = val > 60 ? 'var(--danger)' : val > 30 ? 'var(--warning)' : 'var(--success)';
+  return (
+    <div className={styles.tooltip}>
+      <div className={styles.ttLabel}>{label}</div>
+      <div className={styles.ttRow}>
+        <span>Flood Risk</span>
+        <span style={{ color, fontWeight: 700 }}>{val}%</span>
+      </div>
+    </div>
+  );
+};
 
 export default function Predictions({ locationKey, apiData, loading }) {
   const location = LOCATIONS[locationKey] ?? LOCATIONS.hyderabad;
@@ -12,6 +31,12 @@ export default function Predictions({ locationKey, apiData, loading }) {
   const forecast = apiData?.forecast?.data ?? [];
 
   const TrendIcon = dash?.trendUp ? TrendingUp : dash?.trendDown ? TrendingDown : Minus;
+
+  // Area chart data from QPF predictions
+  const chartData = predictions.map(p => ({ name: p.day, Risk: p.pct }));
+
+  // Color gradient stops based on risk
+  const gradientId = 'riskGradient';
 
   return (
     <div className={styles.page}>
@@ -42,6 +67,33 @@ export default function Predictions({ locationKey, apiData, loading }) {
           <span className={styles.trendStatLbl}>Departure from Normal</span>
         </div>
       </div>
+
+      {/* Risk Area Chart */}
+      {chartData.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>5-Day Flood Risk Trend</h2>
+          <p className={styles.sectionSub}>Flood risk probability derived from IMD Basin QPF forecasts</p>
+          <div className={styles.chartWrap}>
+            <ResponsiveContainer width="100%" height={260}>
+              <AreaChart data={chartData} margin={{ top: 12, right: 16, left: 0, bottom: 4 }}>
+                <defs>
+                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis dataKey="name" tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} axisLine={{ stroke: 'var(--border)' }} tickLine={false} />
+                <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} unit="%" />
+                <Tooltip content={<RiskTooltip />} />
+                <ReferenceLine y={60} stroke="var(--danger)" strokeDasharray="5 3" label={{ value: 'High Risk', position: 'insideTopRight', fill: 'var(--danger)', fontSize: 10 }} />
+                <ReferenceLine y={30} stroke="var(--warning)" strokeDasharray="5 3" label={{ value: 'Medium Risk', position: 'insideTopRight', fill: 'var(--warning)', fontSize: 10 }} />
+                <Area type="monotone" dataKey="Risk" stroke="#2563eb" strokeWidth={2.5} fill={`url(#${gradientId})`} dot={{ fill: '#2563eb', r: 4 }} activeDot={{ r: 6 }} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
+      )}
 
       {/* QPF Prediction bars */}
       <section className={styles.section}>

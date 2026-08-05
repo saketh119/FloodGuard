@@ -1,6 +1,54 @@
 version: "3.8"
 services:
-  app:
-    image: alpine:latest
-    command: echo "FloodGuard placeholder service"
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:////app/floodguard.db
     restart: unless-stopped
+
+  mock-imd:
+    build: ./backend
+    command: python scripts/mock_imd_server.py
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+
+  mock-cwc:
+    build: ./backend
+    command: python scripts/mock_cwc_server.py
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./backend:/app
+
+  mock-weather:
+    build: ./backend
+    command: python scripts/mock_weather_server.py
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./backend:/app
+
+  mock-rss:
+    build: ./backend
+    command: python scripts/mock_rss_server.py
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - ./dashboard:/app
+    ports:
+      - "5173:5173"
+    command: npm run dev
+    environment:
+      - VITE_API_URL=http://localhost:8000/api/v1

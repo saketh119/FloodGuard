@@ -131,7 +131,15 @@ export default function ChatAssistant() {
       <div className={styles.suggestions}>
         <span className={styles.sugLabel}>Try asking:</span>
         {['What does an Orange IMD warning mean?', 'How to evacuate during a flood?', 'What is NDRF response time?'].map(q => (
-          <button key={q} className={styles.sugBtn} onClick={() => { setInput(q); }}>
+          <button key={q} className={styles.sugBtn} onClick={async () => {
+            if (sending) return;
+            setInput('');
+            setSending(true);
+            setMessages(prev => [...prev, { role: 'user', content: q, ts: new Date() }]);
+            const answer = await queryRag(q);
+            setMessages(prev => [...prev, { role: 'assistant', content: answer, ts: new Date() }]);
+            setSending(false);
+          }}>
             {q}
           </button>
         ))}

@@ -8,6 +8,7 @@ import RiversReservoirs from '../pages/RiversReservoirs/RiversReservoirs';
 import Reports          from '../pages/Reports/Reports';
 import SavedLocations   from '../pages/SavedLocations/SavedLocations';
 import ChatAssistant    from '../pages/ChatAssistant/ChatAssistant';
+import MapView          from '../pages/MapView/MapView';
 
 /**
  * AppRouter — all pages receive shared props:
@@ -27,6 +28,7 @@ export default function AppRouter({ locationKey, onLocationChange, apiData, load
       <Route path="/reports"     element={<Reports          {...shared} />} />
       <Route path="/saved"       element={<SavedLocations   {...shared} />} />
       <Route path="/chat"        element={<ChatAssistant />} />
+      <Route path="/map"         element={<MapView       {...shared} />} />
       <Route path="*"            element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -1,7 +1,23 @@
 import styles from './Header.module.css';
 import { Menu, Bell, Moon, Sun, ChevronDown, RefreshCw, Loader2 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+
+const PAGE_TITLES = {
+  '/':            'Dashboard',
+  '/floods':      'Current Floods',
+  '/alerts':      'Alerts',
+  '/predictions': 'Predictions',
+  '/weather':     'Weather & Rainfall',
+  '/rivers':      'Rivers & Reservoirs',
+  '/reports':     'Reports',
+  '/saved':       'Saved Locations',
+  '/chat':        'Chat Assistant',
+  '/map':         'Interactive Map',
+};
 
 export default function Header({ darkMode, onToggleTheme, loading, onRefresh, location }) {
+  const { pathname } = useLocation();
+  const pageTitle = PAGE_TITLES[pathname] ?? 'Dashboard';
   const subtitle = location ? `${location.label}, ${location.state}` : 'Real-time flood intelligence and alerts';
   return (
     <header className={styles.header}>
@@ -10,7 +26,7 @@ export default function Header({ darkMode, onToggleTheme, loading, onRefresh, lo
           <Menu size={20} />
         </button>
         <div>
-          <h1 className={styles.title}>Dashboard</h1>
+          <h1 className={styles.title}>{pageTitle}</h1>
           <p className={styles.subtitle}>{subtitle}</p>
         </div>
       </div>

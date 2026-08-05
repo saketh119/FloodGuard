@@ -1,4 +1,4 @@
-# FloodGuard RAG — Running Locally
+# FloodGuard RAG ï¿½ Running Locally
 
 This guide is for team members who have already cloned the repo. All scripts and config files are included.
 
@@ -32,8 +32,8 @@ This guide is for team members who have already cloned the repo. All scripts and
 
 The `chroma_db/` folder contains the pre-built vector embeddings of all flood management documents. Download and extract it from the shared Google Drive link:
 
-> **[Download chroma_db.zip — Google Drive](#)**
-> *(Replace this placeholder with the actual Drive link)*
+> **[https://drive.google.com/file/d/1Tvbk-70xTuK1DEduWeinDd5gTHS1ZrsL/view?usp=drive_link](#)**
+> *( Drive link)*
 
 After downloading, extract the zip so the folder structure looks like this:
 
@@ -112,7 +112,7 @@ When the team lead updates the PDF documents and re-runs ingestion, they will up
 1. Delete your existing `rag/chroma_db/` folder
 2. Download the new zip from Drive
 3. Extract it to `rag/chroma_db/`
-4. Run `app.py` — it will immediately use the updated database
+4. Run `app.py` ï¿½ it will immediately use the updated database
 
 ---
 
@@ -121,7 +121,7 @@ When the team lead updates the PDF documents and re-runs ingestion, they will up
 | Problem | Fix |
 |---|---|
 | `Vector database not found` error | Make sure you extracted `chroma_db/` into `rag/chroma_db/` (not a nested folder inside it) |
-| `TesseractNotFoundError` | Only relevant if running `ingest.py` — restart terminal after installing Tesseract |
+| `TesseractNotFoundError` | Only relevant if running `ingest.py` ï¿½ restart terminal after installing Tesseract |
 | `ModuleNotFoundError` for any package | Run `pip install -r requirements.txt` again |
-| `404 Model not found` on OpenRouter | The free model was retired — update the `model=` string in `app.py` to another active free model from [openrouter.ai/models](https://openrouter.ai/models) |
-| Slow first startup | Normal — the HuggingFace embedding model is loading from disk into RAM on first run |
+| `404 Model not found` on OpenRouter | The free model was retired ï¿½ update the `model=` string in `app.py` to another active free model from [openrouter.ai/models](https://openrouter.ai/models) |
+| Slow first startup | Normal ï¿½ the HuggingFace embedding model is loading from disk into RAM on first run |

@@ -59,28 +59,28 @@ The project is currently in the **early development and indexing phase**:
 ## 4. What's Left (Backlog)
 
 ### 🧱 1. Backend Ingestion & Database Layer
-- [ ] **Database Setup**: Implement the relational schema outlined in SADD (SQLite or PostgreSQL) containing:
+- [x] **Database Setup**: Implement the relational schema outlined in SADD (SQLite or PostgreSQL) containing:
   - `imd_observation`
   - `cwc_station` (metadata) & `cwc_measurement` (time-series)
   - `weather_observation`
   - `news_observation`
   - `flood_events` & `event_evidence`
   - `prediction_results` & `notifications`
-- [ ] **Source Adapters**:
+- [x] **Source Adapters**:
   - IMD Adapter (warning & rainfall data scraper).
   - CWC Scraper utilizing the reverse-engineered `GET /iam/api/layer-station/{stationCode}` API.
   - Weather API client wrapper.
   - RSS News scraper.
-- [ ] **Data Ingestion Scheduler**: Build the scheduler module (e.g. APScheduler or Celery) configured to pull data periodically (IMD: 5 min, Weather: 10 min, News: 30 min).
+- [x] **Data Ingestion Scheduler**: Build the scheduler module (e.g. APScheduler or Celery) configured to pull data periodically (IMD: 5 min, Weather: 10 min, News: 30 min).
 
 ### ⚙️ 2. Core Processing Engines
-- [ ] **Trigger Detection Engine**: Set up source-specific detection filters (e.g., Red/Orange IMD warnings, water level exceeding warning/danger limits on CWC, rainfall volume thresholds).
-- [ ] **Event Correlation Engine**: Write logic to match incoming alerts to existing events within spatial/temporal windows, updating the event's confidence score and linking the new alert as evidence.
-- [ ] **AI Summarizer**: Implement an LLM pipeline to periodically update the unified event description (`ai_summary` field) as new evidence gets attached.
+- [x] **Trigger Detection Engine**: Set up source-specific detection filters (e.g., Red/Orange IMD warnings, water level exceeding warning/danger limits on CWC, rainfall volume thresholds).
+- [x] **Event Correlation Engine**: Write logic to match incoming alerts to existing events within spatial/temporal windows, updating the event's confidence score and linking the new alert as evidence.
+- [x] **AI Summarizer**: Implement an LLM pipeline to periodically update the unified event description (`ai_summary` field) as new evidence gets attached.
 - [ ] **ML Prediction Engine**: Code the ML pipeline to predict severity and probability scores based on meteorological models.
 
 ### 🌐 3. FastAPI REST APIs
-- [ ] Build FastAPI server with endpoints for:
+- [x] Build FastAPI server with endpoints for:
   - `/events` (GET filters, POST/PUT adjustments)
   - `/stations` (GET location coordinates)
   - `/predictions` (GET scores and trends)

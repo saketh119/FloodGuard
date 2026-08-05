@@ -23,5 +23,9 @@
 .more { font-size: 11px; color: var(--text-muted); text-align: right; }
 .downloadBtn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; background: var(--brand); color: #fff; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: background var(--transition); }
 .downloadBtn:hover { background: var(--brand-hover); }
+.downloadBtns { display: flex; gap: 8px; }
+.downloadBtns .downloadBtn { flex: 1; }
+.downloadAlt { background: var(--bg-input); color: var(--brand); border: 1px solid var(--border); }
+.downloadAlt:hover { background: var(--brand-subtle); border-color: var(--brand); }
 .noData { color: var(--text-muted); font-size: 13px; text-align: center; padding: 40px; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border); }
 @media(max-width:800px) { .reportGrid { grid-template-columns: 1fr; } }

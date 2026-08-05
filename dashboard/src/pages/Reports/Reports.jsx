@@ -78,10 +78,26 @@ function downloadReport(report) {
   const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
-  a.href     = url;
-  a.download = `${report.id}-${new Date().toISOString().slice(0,10)}.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
+  a.href = url; a.download = `${report.id}-${new Date().toISOString().slice(0,10)}.txt`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function downloadCSV(report) {
+  const csv = ['Field,Value', ...report.rows.map(([k, v]) => `"${k}","${String(v).replace(/"/g, '""')}"`)].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `${report.id}-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function downloadJSON(report) {
+  const obj = { title: report.title, type: report.type, generatedAt: new Date().toISOString(), data: Object.fromEntries(report.rows) };
+  const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `${report.id}-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
 }
 
 const FILTER_TYPES = ['All','Weather','Rainfall','Alert','Prediction'];
@@ -130,9 +146,17 @@ export default function Reports({ locationKey, apiData }) {
                 ))}
                 {report.rows.length > 4 && <p className={styles.more}>+{report.rows.length - 4} more fields</p>}
               </div>
-              <button className={styles.downloadBtn} onClick={() => downloadReport(report)}>
-                <Download size={14} /> Download .txt
-              </button>
+              <div className={styles.downloadBtns}>
+                <button className={styles.downloadBtn} onClick={() => downloadReport(report)}>
+                  <Download size={14} /> .txt
+                </button>
+                <button className={`${styles.downloadBtn} ${styles.downloadAlt}`} onClick={() => downloadCSV(report)}>
+                  <Download size={14} /> .csv
+                </button>
+                <button className={`${styles.downloadBtn} ${styles.downloadAlt}`} onClick={() => downloadJSON(report)}>
+                  <Download size={14} /> .json
+                </button>
+              </div>
             </div>
           ))}
         </div>
