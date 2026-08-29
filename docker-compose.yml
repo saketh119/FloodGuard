@@ -1,6 +1,29 @@
-version: "3.8"
+# Development topology. Mirrors what `make mock` / `make api` / `make web` run locally.
+# Images are not built yet — see deploy/ for the production path.
+version: "3.9"
+
 services:
-  app:
-    image: alpine:latest
-    command: echo "FloodGuard placeholder service"
-    restart: unless-stopped
+  mock-imd:
+    build: { context: ., dockerfile: deploy/mock-imd.Dockerfile }
+    command: uvicorn mock_imd_server:app --host 0.0.0.0 --port 8080 --app-dir apps/mock-imd
+    ports: ["8080:8080"]
+
+  api:
+    build: { context: ., dockerfile: deploy/api.Dockerfile }
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    working_dir: /srv/apps/api
+    environment:
+      IMD_BASE_URL: http://mock-imd:8080
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    volumes:
+      - ./services/ml/models:/srv/services/ml/models:ro
+      - ./services/rag/chroma_db:/srv/services/rag/chroma_db:ro
+    ports: ["8000:8000"]
+    depends_on: [mock-imd]
+
+  web:
+    build: { context: ., dockerfile: deploy/web.Dockerfile }
+    environment:
+      FLOODGUARD_API_BASE: http://api:8000
+    ports: ["3000:3000"]
+    depends_on: [api]

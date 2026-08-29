@@ -1,0 +1,94 @@
+.page { padding: 28px; display: flex; flex-direction: column; gap: 20px; max-width: 900px; margin: 0 auto; height: calc(100vh - var(--header-h) - 56px); }
+.title { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+.ragStatus { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); padding: 10px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.ragStatus code { background: var(--bg-input); padding: 1px 6px; border-radius: 4px; font-size: 11px; }
+
+.chatWindow { flex: 1; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+
+.messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-height: 0; }
+
+.msg { display: flex; gap: 10px; align-items: flex-start; }
+.user { flex-direction: row-reverse; }
+
+.avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.bot .avatar { background: var(--brand); color: #fff; }
+.user .avatar { background: #7c3aed; color: #fff; }
+
+.bubble { max-width: 75%; display: flex; flex-direction: column; gap: 4px; }
+.bubbleContent { padding: 12px 16px; border-radius: var(--radius-sm); font-size: 13.5px; line-height: 1.65; }
+.bot .bubbleContent { background: var(--bg-input); color: var(--text-primary); border-radius: 4px 16px 16px 16px; }
+.user .bubbleContent { background: var(--brand); color: #fff; border-radius: 16px 4px 16px 16px; }
+.bubbleContent code { background: rgba(0,0,0,.12); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+.ts { font-size: 10px; color: var(--text-muted); }
+.user .ts { text-align: right; }
+
+.typing { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--bg-input); border-radius: 4px 16px 16px 16px; color: var(--text-muted); font-size: 13px; }
+.spin { animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.inputRow { display: flex; align-items: flex-end; gap: 10px; padding: 14px 16px; border-top: 1px solid var(--border); background: var(--bg-card); }
+.input { flex: 1; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13.5px; font-family: var(--font); resize: none; background: var(--bg-input); color: var(--text-primary); line-height: 1.5; outline: none; transition: border-color var(--transition); }
+.input:focus { border-color: var(--brand); }
+.input::placeholder { color: var(--text-muted); }
+.sendBtn { width: 44px; height: 44px; background: var(--brand); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; flex-shrink: 0; transition: background var(--transition); }
+.sendBtn:hover:not(:disabled) { background: var(--brand-hover); }
+.sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.suggestions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sugLabel { font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+.sugBtn { font-size: 12px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--bg-card); color: var(--text-secondary); cursor: pointer; transition: all var(--transition); }
+.sugBtn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-subtle); }
+
+/* ── Citations (backend-grounded answers) ─────────────────────────── */
+.citations {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+}
+
+.citationsLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.citation {
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--bg-hover, rgba(127, 127, 127, 0.12));
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.citation em {
+  font-style: normal;
+  opacity: 0.7;
+}
+
+/* Shown when a configured Gemini key exists but the call failed — distinct from
+   the "no key" case, which is expected and not an error. */
+.llmError {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 9px;
+  padding: 7px 9px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--danger) 8%, transparent);
+}

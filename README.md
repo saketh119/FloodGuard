@@ -1,100 +1,75 @@
 # 🌊 FloodGuard
 
-> **An AI-Powered Real-Time Flood Response and Alert System**
+> **AI-Powered Flood Intelligence Platform**
 
-FloodGuard is an AI-powered disaster management platform that predicts flood risk using Machine Learning, provides real-time weather updates, recommends nearby shelters, and assists users through a Retrieval-Augmented Generation (RAG) based AI assistant built on trusted government guidelines.
+FloodGuard ingests meteorological data, detects flood triggers against IMD's published
+thresholds, correlates them into evolving flood events, scores severity with a model
+trained on real gauged floods, and answers preparedness questions from official NDMA
+and IMD publications — with citations.
+
+- **Run it:** `python run.py` → http://localhost:3000 · see **[RUNNING.md](RUNNING.md)**
+- **[docs/folder_structure.md](docs/folder_structure.md)** — how the repo is laid out
+- **[docs/project_status.md](docs/project_status.md)** — what is built and what is not
 
 ---
 
-## 🏗️ System Architecture
+## Architecture
 
 ```mermaid
-flowchart TD
-    U[Users]
-    F[Next.js Frontend]
-    G[FastAPI API Gateway]
-    P[Flood Prediction Service]
-    A[AI Assistant Service - RAG]
-    L[Live Weather Update Service]
-    S[Shelter Recommendation Service]
-    DB[(Supabase)]
-    PG[(PostgreSQL + pgvector)]
-    W[Weather APIs]
-    GOV[Government Data]
-    DOC[RAG Documents]
+flowchart LR
+    IMD[IMD API<br/>mock today]
+    subgraph GW["apps/api — FastAPI gateway"]
+        COL[Collectors<br/>+ adapters]
+        OBS[(Immutable<br/>observations)]
+        TRG[Trigger engine<br/>IMD thresholds]
+        COR[Correlation engine<br/>district + 6h window]
+        EVT[(Flood events<br/>+ evidence)]
+        ML[Severity model<br/>IndoFloods]
+        RAG[RAG + Gemini<br/>NDMA/IMD corpus]
+    end
+    WEB[apps/web<br/>Next.js dashboard]
 
-    U --> F
-    F --> G
-    G --> P
-    G --> A
-    G --> L
-    G --> S
-    P --> DB
-    A --> DB
-    L --> DB
-    S --> DB
-    DB --> PG
-    W --> L
-    GOV --> L
-    DOC --> A
+    IMD --> COL --> OBS --> TRG --> COR --> EVT
+    EVT --> ML --> EVT
+    EVT --> RAG
+    EVT --> WEB
+    RAG --> WEB
 ```
+
+The web app has exactly one upstream — the gateway. It never calls IMD directly.
 
 ---
 
-## 📂 Project Structure
+## What each piece does
 
-```text
-FloodGuard/
-│
-├── backend/                   # FastAPI API Gateway and microservices
-│
-├── frontend/                  # Next.js + TypeScript + Tailwind CSS app
-│
-├── ml/                        # Machine Learning pipeline
-│   ├── notebooks/
-│   ├── preprocessing/
-│   ├── training/
-│   └── models/
-│
-├── datasets/
-│   ├── raw/
-│   │   ├── ml/
-│   │   └── rag/
-│   └── processed/
-│
-├── docs/
-│
-├── deployment/
-│
-├── scripts/
-│
-├── README.md
-│
-└── docker-compose.yml
-```
+| Layer | Behaviour |
+|---|---|
+| **Live weather** | **OpenWeather** is the first genuinely live source — observed conditions and a 5-day forecast for all 7 districts, refreshed each cycle. Observed rain and next-24h forecast accumulation both feed the trigger engine. IMD remains mocked, and the UI marks live figures `LIVE` so the two are never confused. |
+| **Realtime** | The API publishes a server-sent event when a collection cycle completes, so dashboards update the moment new data lands instead of waiting out a poll. A 60s poll remains as a fallback; the header shows whether the stream is connected. |
+| **Adapters** | Normalise every IMD response shape into one observation record. Raw JSON is never discarded; a content hash stops re-polls creating duplicates. |
+| **Trigger engine** | Fires on IMD colour codes ≥ Orange and the official rainfall classes (64.5 / 115.6 / 204.5 mm). |
+| **Correlation engine** | Matches a trigger to an open event in the same district within 6 hours, attaching it as evidence and raising confidence — otherwise opens a new event. Repeated evidence of the same *type* has diminishing returns, so one basin forecast split across four sub-basins counts once. |
+| **Severity model** | `HistGradientBoosting` on IndoFloods — 4,548 real gauged events, 155 catchments. **ROC-AUC 0.575** under GroupKFold by gauge (unseen catchments). Modest but real; it contributes 25% of the blended risk score, the rule-based index drives the rest. |
+| **RAG** | 2,677 chunks from 8 NDMA/IMD/NDRF PDFs in Chroma. **Hybrid retrieval** — vector search plus a keyword pass, then near-duplicate and per-document diversity filters. Pure vector search buried the answer under boilerplate footers reprinted on every page. Gemini answers are grounded and cited; with no key, source passages are returned verbatim and labelled as such. |
+
+### On the ML honestly
+
+The repo ships `services/ml/training/train_flood_risk.py`, which trains on
+`flood_risk_india.csv` and reaches **ROC-AUC 0.496** — chance — with near-uniform
+feature importances. That dataset's labels are unrelated to its features. The script is
+kept as the record of why it was rejected, not because it is used.
+
+Live scoring also has to interpolate rainfall accumulations from IMD's daily/weekly
+totals, so `/predictions` labels every feature `observed`, `interpolated` or `imputed`
+rather than presenting them all as measurements.
 
 ---
 
-## 🚀 Current Status
+## Status
 
-- [x] Project planning
-- [x] Dataset collection
-- [x] RAG document collection
-- [x] Repository setup
+Working end to end: mock IMD → correlated events → ML score → AI summary → dashboard,
+with a 60s scheduler.
 
-## ✅ Phase Progress
-
-### Day 1 - Phase 1
-
-- [x] Reviewed project structure and dataset sources.
-- [x] Created the ML notebook scaffold in `ml/notebooks/`.
-- [x] Added `01_data_exploration.ipynb` for initial dataset inspection.
-- [x] Added `02_preprocessing.ipynb` as the preprocessing workspace.
-- [x] Added `03_model_training.ipynb` as the model training workspace.
-- [x] Documented the initial dataset audit in `docs/Dataset_Analysis.md`.
-- [x] Installed the notebook dependencies needed for exploration and analysis.
-
-### Notes
-
-- The exploration notebook is intentionally focused on understanding the raw data first.
-- No cleaning or missing-value removal has been applied yet.
+Not built yet: CWC water levels, RSS/news ingestion, PostgreSQL + pgvector, auth,
+Leaflet maps, notifications. River level and reservoir figures in the UI are labelled
+proxies derived from rainfall until CWC is wired.
