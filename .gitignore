@@ -13,10 +13,12 @@ node_modules/
 dist/
 build/
 
-# Environment and secrets
+# Environment and secrets — real values are ignored, templates are not.
 .env
 .env.local
 .env.*
+!.env.example
+!*.env.example
 
 # ML / data artifacts
 *.pkl
@@ -42,4 +44,9 @@ logs/
 # OS files
 .DS_Store
 Thumbs.db
-rag/chroma_db/ 
+services/rag/chroma_db/ 
+
+# FloodGuard backend runtime
+apps/api/floodguard.db
+apps/api/.env
+services/ml/models/*.joblib

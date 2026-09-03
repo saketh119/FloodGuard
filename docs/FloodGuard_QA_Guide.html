@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FloodGuard — Review & Viva Question Bank</title>
+<style>
+  @page {
+    size: A4; margin: 18mm 16mm 16mm 16mm;
+    @bottom-center { content: counter(page); font: 8.5pt "Helvetica Neue", sans-serif; color: #94a3b8; }
+  }
+  @page :first { margin-top: 0; @bottom-center { content: ""; } }
+
+  * { box-sizing: border-box; }
+  body { font: 9.6pt/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color: #1e293b; margin: 0; }
+
+  /* ── Cover ─────────────────────────────────────────── */
+  .cover { height: 247mm; padding: 46mm 6mm 0; page-break-after: always; }
+  .cover .eyebrow { font-size: 9pt; letter-spacing: .22em; text-transform: uppercase; color: #2563eb; font-weight: 700; }
+  .cover h1 { font-size: 33pt; line-height: 1.08; margin: 12px 0 6px; letter-spacing: -.02em; color: #0f172a; }
+  .cover h2 { font-size: 14pt; font-weight: 400; color: #64748b; margin: 0 0 30px; }
+  .cover .rule { height: 3px; width: 62px; background: #2563eb; margin: 26px 0; }
+  .cover .lede { font-size: 10.5pt; line-height: 1.65; color: #475569; max-width: 128mm; }
+  .cover .meta { margin-top: 34px; font-size: 8.8pt; color: #64748b; }
+  .cover .meta b { color: #0f172a; }
+
+  /* ── Fact sheet ────────────────────────────────────── */
+  .facts { display: flex; flex-wrap: wrap; gap: 7px; margin: 22px 0 0; }
+  .fact { flex: 1 1 30%; border: 1px solid #e2e8f0; border-left: 2.5px solid #2563eb;
+          border-radius: 3px; padding: 8px 10px; background: #f8fafc; }
+  .fact .n { font-size: 14pt; font-weight: 700; color: #0f172a; letter-spacing: -.01em; }
+  .fact .l { font-size: 7.6pt; color: #64748b; line-height: 1.35; margin-top: 1px; }
+
+  /* ── Sections ──────────────────────────────────────── */
+  h3.section { font-size: 13pt; color: #0f172a; margin: 0 0 3px; letter-spacing: -.01em;
+               padding-bottom: 7px; border-bottom: 2px solid #2563eb; }
+  .section-wrap { page-break-before: always; }
+  .section-wrap.first { page-break-before: avoid; }
+  .section-note { font-size: 8.6pt; color: #64748b; margin: 7px 0 15px; font-style: italic; }
+
+  .qa { page-break-inside: avoid; margin-bottom: 12px; padding-left: 21px; position: relative; }
+  .qa .q { font-weight: 700; color: #0f172a; font-size: 9.9pt; margin-bottom: 3px; }
+  .qa .num { position: absolute; left: 0; top: 0; font-size: 8pt; font-weight: 700;
+             color: #2563eb; font-variant-numeric: tabular-nums; }
+  .qa .a { color: #334155; }
+  .qa .a p { margin: 0 0 5px; }
+  .qa .a ul { margin: 4px 0 5px; padding-left: 16px; }
+  .qa .a li { margin-bottom: 2.5px; }
+
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8.4pt;
+         background: #f1f5f9; padding: 1px 3.5px; border-radius: 2.5px; color: #0f172a; }
+  b, strong { color: #0f172a; }
+
+  .callout { border-left: 2.5px solid #f59e0b; background: #fffbeb; padding: 7px 11px;
+             margin: 6px 0; font-size: 9pt; border-radius: 0 3px 3px 0; }
+  .callout b { color: #92400e; }
+  .flag { display: inline-block; font-size: 7.2pt; font-weight: 700; letter-spacing: .06em;
+          text-transform: uppercase; padding: 1px 5px; border-radius: 2.5px; margin-left: 5px;
+          vertical-align: 1.5px; }
+  .flag.hard { background: #fee2e2; color: #b91c1c; }
+  .flag.core { background: #dbeafe; color: #1d4ed8; }
+
+  table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 8.6pt; }
+  th { text-align: left; background: #f1f5f9; padding: 4px 7px; font-size: 7.8pt;
+       text-transform: uppercase; letter-spacing: .05em; color: #475569; border-bottom: 1px solid #cbd5e1; }
+  td { padding: 4px 7px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  td code { font-size: 8pt; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="eyebrow">Project Defence · Question Bank</div>
+  <h1>FloodGuard</h1>
+  <h2>AI-Powered Flood Intelligence Platform</h2>
+  <div class="rule"></div>
+  <p class="lede">
+    Questions a reviewer, guide or examiner is likely to ask about this project — covering
+    architecture, data ingestion, the event correlation engine, machine learning, retrieval-augmented
+    generation, and the live realtime pipeline. Every answer is grounded in what the codebase
+    actually does, including the parts that are weak.
+  </p>
+  <p class="lede" style="margin-top:14px">
+    The hardest questions are the ones about the model's accuracy and the mocked data source.
+    Those are answered honestly rather than defensively — a reviewer will find them either way,
+    and a candidate who raises them first is in a far stronger position.
+  </p>
+  <div class="meta">
+    <b>Stack</b> &nbsp;FastAPI · Next.js 15 · SQLAlchemy · scikit-learn · ChromaDB · Google Gemini<br>
+    <b>Sources</b> &nbsp;OpenWeather (live) · IMD (mock) · NDMA/IMD/NDRF document corpus<br>
+    <b>Generated</b> &nbsp;29 August 2026 · from the working repository
+  </div>
+</div>
+
+<div class="section-wrap first">
+<h3 class="section">Numbers Worth Memorising</h3>
+<p class="section-note">If you are asked for a figure and hesitate, it undermines everything else you say. These are the ones that come up.</p>
+
+<div class="facts">
+  <div class="fact"><div class="n">4,548</div><div class="l">IndoFloods gauged flood events used for training</div></div>
+  <div class="fact"><div class="n">155</div><div class="l">catchments — the GroupKFold grouping key</div></div>
+  <div class="fact"><div class="n">0.575</div><div class="l">ROC-AUC, GroupKFold by gauge (unseen catchments)</div></div>
+  <div class="fact"><div class="n">0.611</div><div class="l">ROC-AUC with catchment attributes (reference only)</div></div>
+  <div class="fact"><div class="n">0.496</div><div class="l">ROC-AUC of the dataset we rejected — chance</div></div>
+  <div class="fact"><div class="n">2,677</div><div class="l">RAG chunks indexed from 8 official PDFs</div></div>
+  <div class="fact"><div class="n">64.5 mm</div><div class="l">IMD heavy rain / 24h — the primary trigger threshold</div></div>
+  <div class="fact"><div class="n">115.6 / 204.5</div><div class="l">very heavy / extremely heavy rain thresholds (mm)</div></div>
+  <div class="fact"><div class="n">6 hours</div><div class="l">event correlation window</div></div>
+  <div class="fact"><div class="n">60 s</div><div class="l">scheduler collection interval</div></div>
+  <div class="fact"><div class="n">0.42 s</div><div class="l">measured SSE push latency, cycle to browser</div></div>
+  <div class="fact"><div class="n">21</div><div class="l">REST endpoints exposed by the gateway</div></div>
+</div>
+
+<table style="margin-top:16px">
+  <tr><th>Layer</th><th>Choice</th><th>One-line justification</th></tr>
+  <tr><td>Gateway</td><td>FastAPI</td><td>async ingestion, automatic OpenAPI, Pydantic validation</td></tr>
+  <tr><td>Storage</td><td>SQLite via SQLAlchemy 2.0</td><td>zero setup; models are portable to Postgres by changing one URL</td></tr>
+  <tr><td>Model</td><td>HistGradientBoosting</td><td>handles the NaNs in hydrology tables natively, no imputation step</td></tr>
+  <tr><td>Vector store</td><td>ChromaDB + ONNX MiniLM</td><td>runs locally, no embedding API key, no torch dependency</td></tr>
+  <tr><td>LLM</td><td>Gemini 2.5 Flash</td><td>free tier, fast, sufficient for grounded summarisation</td></tr>
+  <tr><td>Frontend</td><td>Next.js 15 App Router</td><td>file-based routing, server-side rewrites hide the API origin</td></tr>
+  <tr><td>Realtime</td><td>Server-Sent Events</td><td>one-directional traffic; survives proxies; auto-reconnects</td></tr>
+</table>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">1 · Product &amp; Architecture</h3>
+<p class="section-note">Opening questions. The examiner is establishing whether you understand the system as a whole before probing any one part.</p>
+
+<div class="qa"><div class="num">1.1</div>
+<div class="q">What problem does FloodGuard actually solve? <span class="flag core">core</span></div>
+<div class="a"><p>Flood information in India is scattered across IMD warnings, CWC river gauges, weather APIs and news feeds. Each source reports in isolation, so an official has to correlate them mentally. FloodGuard ingests those sources, detects which readings are worth reacting to, and merges related readings into a single <b>flood event</b> that evolves as evidence accumulates — with a confidence score, an ML severity estimate, and a plain-language summary. The output is one row per situation instead of dozens of disconnected observations.</p></div></div>
+
+<div class="qa"><div class="num">1.2</div>
+<div class="q">Why model "events" rather than just showing the API responses? <span class="flag core">core</span></div>
+<div class="a"><p>Because a flood is not an API response. Guwahati under heavy rain produces an IMD nowcast, a five-day district warning, a district rainfall figure and a basin forecast — four records describing one situation. Showing four rows makes the operator do the correlation. Modelling one event with four pieces of attached evidence puts that work in the system, and lets the event carry state the raw records cannot: a confidence score that rises as sources agree, a lifecycle, and an accumulating narrative.</p></div></div>
+
+<div class="qa"><div class="num">1.3</div>
+<div class="q">Walk me through the data flow end to end.</div>
+<div class="a">
+<p>Seven stages, all visible in the code:</p>
+<ul>
+<li><b>Collect</b> — the scheduler fans out across IMD and OpenWeather endpoints every 60&nbsp;s.</li>
+<li><b>Adapt</b> — a per-source adapter normalises each response shape into one observation record. Raw JSON is retained.</li>
+<li><b>Store</b> — observations are inserted immutably, with a content hash preventing duplicates.</li>
+<li><b>Trigger</b> — each new observation is tested against source-specific rules; most produce nothing.</li>
+<li><b>Correlate</b> — a fired trigger is matched to an open event in the same district within 6&nbsp;h, or opens a new one.</li>
+<li><b>Score</b> — the ML model estimates the probability of escalation to a severe flood.</li>
+<li><b>Summarise &amp; publish</b> — Gemini rewrites the event narrative, and an SSE message tells connected dashboards.</li>
+</ul></div></div>
+
+<div class="qa"><div class="num">1.4</div>
+<div class="q">Why is the repository split into <code>apps/</code> and <code>services/</code>?</div>
+<div class="a"><p>Anything in <code>apps/</code> is a process you start — the API gateway, the web app, the mock source. Anything in <code>services/</code> is a pipeline that produces artifacts the gateway loads at runtime: the trained model file and the vector store. Previously <code>backend/</code>, <code>dashboard/</code>, <code>ml/</code> and <code>rag/</code> sat flat at the root with nothing signalling which were deployable. The split makes the deployment unit obvious.</p></div></div>
+
+<div class="qa"><div class="num">1.5</div>
+<div class="q">Why does the frontend never call the weather APIs directly?</div>
+<div class="a"><p>Three reasons. The API keys stay server-side and never enter the client bundle. There is no CORS negotiation, because the browser only ever calls same-origin <code>/api/*</code>, which Next.js rewrites to the gateway. And the gateway is where correlation and scoring happen — a browser calling IMD directly would have to re-implement the trigger logic, which is exactly the duplication that caused an earlier bug in this project.</p>
+<div class="callout"><b>Worth volunteering:</b> the first version of the dashboard <i>did</i> re-implement IMD's rainfall thresholds in JavaScript. The same rule then existed in two places and could disagree. Removing it was one of the concrete improvements made during the rewrite.</div></div></div>
+
+<div class="qa"><div class="num">1.6</div>
+<div class="q">What happens if one data source goes down?</div>
+<div class="a"><p>Each endpoint fetch is individually guarded: a network error, non-2xx status or malformed JSON is logged and returns an empty list, so one dead endpoint cannot abort the collection cycle. The other sources still store observations and events still update. <code>GET /health</code> reports each subsystem's state, and the dashboard header shows whether the live stream is connected.</p></div></div>
+
+<div class="qa"><div class="num">1.7</div>
+<div class="q">How would you add a completely new source, say CWC river gauges?</div>
+<div class="a"><p>Write an adapter that emits the same observation dictionary, a collector that calls the endpoint, and a trigger rule for that source's semantics. Nothing downstream changes — the correlation engine, the scoring service and the API all operate on the normalised record and have no knowledge of where it came from. That was the explicit design goal of the adapter layer, and adding OpenWeather after IMD tested it: it required no change to correlation, storage, or the API.</p></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">2 · Ingestion &amp; Data Modelling</h3>
+<p class="section-note">Questions about the database and the discipline around raw data.</p>
+
+<div class="qa"><div class="num">2.1</div>
+<div class="q">How do you stop the same reading being stored repeatedly? <span class="flag core">core</span></div>
+<div class="a"><p>Every adapted record carries a <code>dedupe_hash</code> — a SHA-256 of the observation type, the location key, the observation <i>date</i>, and the meaningful values. It is a unique column. Polling the same unchanged reading every 60&nbsp;s therefore inserts nothing. The date rather than the clock time is deliberate: an identical re-poll is not new information, but the same reading on a new day genuinely is.</p>
+<p>The insert path also guards against duplicates <i>within</i> a single batch, not just against rows already in the database.</p></div></div>
+
+<div class="qa"><div class="num">2.2</div>
+<div class="q">Why are observations immutable, and why keep the raw JSON?</div>
+<div class="a"><p>Observations are the audit trail. If an event is later disputed, you must be able to show the exact payload that caused it — a mutated record cannot do that. Keeping raw JSON also means a future adapter improvement can re-derive better fields from data already collected, without having to re-fetch. Flood events, by contrast, are explicitly derived and mutable: they are conclusions, not evidence.</p></div></div>
+
+<div class="qa"><div class="num">2.3</div>
+<div class="q">Explain your schema.</div>
+<div class="a">
+<table>
+<tr><th>Table</th><th>Holds</th><th>Mutable?</th></tr>
+<tr><td><code>imd_observation</code></td><td>every normalised reading + raw JSON + dedupe hash</td><td>no</td></tr>
+<tr><td><code>station</code></td><td>station/district metadata, kept separate from readings</td><td>upserted</td></tr>
+<tr><td><code>tracked_location</code></td><td>places users added beyond the built-in registry</td><td>yes</td></tr>
+<tr><td><code>flood_event</code></td><td>derived situation: status, severity, confidence, risk, summary</td><td>yes</td></tr>
+<tr><td><code>event_evidence</code></td><td>link table: which observation moved which event, and why</td><td>append-only</td></tr>
+<tr><td><code>prediction_result</code></td><td>every scoring run, so trends can be charted</td><td>append-only</td></tr>
+</table>
+<p>Separating metadata from time-series mirrors how CWC itself structures its API, which the architecture document notes was discovered by reverse-engineering their station endpoint.</p></div></div>
+
+<div class="qa"><div class="num">2.4</div>
+<div class="q">Why is <code>event_evidence</code> a separate table rather than a JSON column on the event?</div>
+<div class="a"><p>Because it carries its own attributes — the trigger reason, the contribution weight and the time it was attached — and it needs a uniqueness constraint so the same observation cannot be attached to the same event twice. It is also the thing an operator most wants to query: "why does the system believe this?" A JSON blob would make that answer unqueryable.</p></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">3 · Trigger Detection</h3>
+<p class="section-note">The first place a reviewer will probe for arbitrary, invented numbers. The defence is that the numbers are not ours.</p>
+
+<div class="qa"><div class="num">3.1</div>
+<div class="q">Where do your rainfall thresholds come from? <span class="flag core">core</span></div>
+<div class="a"><p>They are IMD's own published daily rainfall classification, not values we chose:</p>
+<table>
+<tr><th>Class</th><th>Range (mm / 24 h)</th><th>Severity assigned</th></tr>
+<tr><td>Heavy rain</td><td>64.5 – 115.5</td><td>moderate</td></tr>
+<tr><td>Very heavy rain</td><td>115.6 – 204.4</td><td>high</td></tr>
+<tr><td>Extremely heavy rain</td><td>≥ 204.5</td><td>severe</td></tr>
+</table>
+<p>Similarly the colour codes are IMD's four-level scheme: 1 Green (no action), 2 Yellow (watch), 3 Orange (be prepared), 4 Red (take action). Anchoring on the source authority's own definitions means the thresholds are defensible rather than tuned to make a demo look good.</p></div></div>
+
+<div class="qa"><div class="num">3.2</div>
+<div class="q">Why don't Green and Yellow warnings create events?</div>
+<div class="a"><p>Because in IMD's scheme they are informational, not calls to action — Yellow means "watch", not "respond". Triggering on them would generate an event for almost every district almost every day, and an alerting system that fires constantly is one people stop reading. Orange is the first level at which IMD itself expects preparation, so that is where the system starts reacting.</p></div></div>
+
+<div class="qa"><div class="num">3.3</div>
+<div class="q">OpenWeather uses a different rainfall rule from IMD. Why the inconsistency? <span class="flag hard">hard</span></div>
+<div class="a"><p>It is not inconsistency, it is a units mismatch that would be a bug if ignored. IMD's 64.5&nbsp;mm figure is a <b>24-hour total</b>. OpenWeather reports rain over the last <b>1 or 3 hours</b>. Applying the daily threshold to a 3-hour reading would mean almost nothing ever triggers, even during an intense downpour. So observed OpenWeather rain triggers at a quarter of the daily figure — a rate that, sustained, clearly exceeds it.</p>
+<p>The OpenWeather <i>forecast</i> rule is different again: we sum the next eight 3-hourly slots to get a genuine 24-hour accumulation, and that <i>is</i> compared against the full IMD thresholds, because it is now the same quantity.</p></div></div>
+
+<div class="qa"><div class="num">3.4</div>
+<div class="q">Do all triggers count equally?</div>
+<div class="a"><p>No. Each trigger carries a contribution weight reflecting how much it should move belief: a Red nowcast contributes 0.30, an observed heavy-rain reading 0.25–0.35, a basin forecast 0.15, and atmospheric conditions (low pressure with saturated air) only 0.10 — the last is supporting evidence and is never enough to open an event on its own.</p></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">4 · Event Correlation Engine</h3>
+<p class="section-note">The architecture document calls this "the heart" of the platform. Expect the most detailed questioning here.</p>
+
+<div class="qa"><div class="num">4.1</div>
+<div class="q">How do you decide two observations describe the same flood? <span class="flag core">core</span></div>
+<div class="a"><p>Spatial and temporal matching. A fired trigger looks for an event in the <b>same district</b> that is still open and whose <code>last_seen</code> falls within the <b>6-hour correlation window</b>. If one exists, the observation attaches to it as evidence; otherwise a new event opens. District-level matching is appropriate because that is the granularity at which IMD issues warnings and at which response is actually coordinated.</p></div></div>
+
+<div class="qa"><div class="num">4.2</div>
+<div class="q">Why six hours?</div>
+<div class="a"><p>It has to be longer than the gap between related signals but shorter than the gap between genuinely separate events. Sources report on different cadences — a nowcast covers 3 hours, district rainfall is daily, a basin forecast is issued once a day — so a window shorter than a few hours would fragment one situation across several events. Six hours covers a monsoon burst and its associated warnings while still letting a fresh storm two days later open its own event. It is configurable via <code>CORRELATION_WINDOW_HOURS</code>, which matters because the right value is an operational judgement, not a constant of nature.</p></div></div>
+
+<div class="qa"><div class="num">4.3</div>
+<div class="q">What is the confidence score and how does it grow? <span class="flag core">core</span></div>
+<div class="a"><p>It represents <b>how much independent evidence agrees</b> that this event is real — deliberately distinct from severity, which is how bad it is. A new event starts at its trigger's contribution plus 0.10. Each additional piece of evidence adds its own contribution, capped at 0.98.</p>
+<p>Concretely, an event that has an IMD Red nowcast, a Red five-day warning and an 85&nbsp;mm district rainfall reading is far more credible than one resting on a single forecast — and the score reflects that, which is what drives the status ladder.</p></div></div>
+
+<div class="qa"><div class="num">4.4</div>
+<div class="q">Why is there a cap at 0.98 rather than 1.0?</div>
+<div class="a"><p>Because the system is inferring from remote sensor readings, not observing a flood. Reserving the last two points is an honest admission that no amount of corroborating telemetry constitutes certainty about conditions on the ground. It also stops the UI ever showing "100% confident", which would invite more trust than the evidence supports.</p></div></div>
+
+<div class="qa"><div class="num">4.5</div>
+<div class="q">Explain the diminishing-returns rule on evidence. <span class="flag hard">hard</span></div>
+<div class="a"><p>This fixed a real bug. IMD's basin QPF response contains one row per <b>sub-basin</b> — the Brahmaputra returns Lohit, Dibang, Subansiri and Kopili. All four are the same forecast, split geographically. The first implementation attached all four at full weight, pushing an event from 0.25 to 0.85 confidence on what was really <b>one signal counted four times</b>.</p>
+<p>Now each additional piece of evidence <i>of the same observation type</i> contributes at half the previous one: 0.15, then 0.075, 0.0375, 0.019. Corroboration from a genuinely different source still counts fully. After the fix, that same event settled at 0.53 — "developing" rather than "high risk", which is the correct reading of a lone basin forecast.</p>
+<div class="callout"><b>Follow-up to expect:</b> "how did you find that?" — the Dibrugarh event was showing 0.85 confidence with four pieces of evidence that were all QPF rows. Inspecting the evidence trail made the double-counting obvious, which is itself an argument for storing the trail.</div></div></div>
+
+<div class="qa"><div class="num">4.6</div>
+<div class="q">Describe the event lifecycle.</div>
+<div class="a"><p><code>potential</code> → <code>developing</code> → <code>high_risk</code> → <code>active</code> → <code>resolved</code>. Status is derived from confidence and severity together, not confidence alone: reaching <code>active</code> requires confidence ≥ 0.75 <i>and</i> severity of high or severe, so a well-corroborated but mild situation does not masquerade as an emergency. Events with no new evidence for 24 hours are automatically resolved.</p></div></div>
+
+<div class="qa"><div class="num">4.7</div>
+<div class="q">How is the risk score computed, and why is it not just the model output? <span class="flag hard">hard</span></div>
+<div class="a"><p>Risk is a 0–100 blend. Before the model has scored an event it is 55% confidence and 45% observed severity. Once scored, the weights become 40% confidence, 35% severity and <b>25% model probability</b>.</p>
+<p>The model is deliberately a minority contributor. Its cross-validated ROC-AUC is 0.575 — better than chance but weak — so letting it dominate a number that officials might act on would misrepresent how much it actually knows. The rule-based component, built on IMD's published thresholds, is the more defensible signal and carries the majority weight.</p></div></div>
+
+<div class="qa"><div class="num">4.8</div>
+<div class="q">What are the known limitations of this correlation approach?</div>
+<div class="a"><ul>
+<li>Matching is by district name, so a flood spanning a district boundary produces two events rather than one. Genuine spatial correlation would use the coordinates already stored on each observation.</li>
+<li>There is no merge operation — two events that should become one cannot currently be joined.</li>
+<li>Contribution weights are hand-set. With labelled outcomes they could be fitted rather than assumed.</li>
+<li>The 24-hour resolution rule is time-based, not evidence-based; a receding flood is not detected as receding.</li>
+</ul></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">5 · Machine Learning</h3>
+<p class="section-note">The most important section to get right. There is a weak result here, and the strongest position is to present it first, with the reasoning that led to it.</p>
+
+<div class="qa"><div class="num">5.1</div>
+<div class="q">What does your model predict, and on what data? <span class="flag core">core</span></div>
+<div class="a"><p>Given the rainfall that has already fallen, it estimates the probability that a flood event escalates to a <b>severe</b> flood. Training data is <b>IndoFloods</b>: 4,548 real gauged flood events across 155 Indian catchments, each labelled <code>Flood</code> or <code>Severe Flood</code> (35.8% positive), joined to observed antecedent rainfall accumulations over 1–10 days.</p>
+<p>The model is a <code>HistGradientBoostingClassifier</code>, chosen because these hydrology tables contain genuine missing values and it handles NaNs natively rather than requiring an imputation step that would invent data.</p></div></div>
+
+<div class="qa"><div class="num">5.2</div>
+<div class="q">You had a dataset called <code>flood_risk_india.csv</code> with 10,000 labelled rows. Why didn't you use it? <span class="flag hard">hard</span></div>
+<div class="a"><p>Because its labels are not related to its features. Trained and evaluated properly, it reaches <b>ROC-AUC 0.496</b> — indistinguishable from a coin flip — with 49.7% accuracy on a 50.6% positive class.</p>
+<p>The decisive evidence was the feature importances: the seven main numeric features each landed at almost exactly 0.12, near-perfectly uniform. A real signal produces uneven importances, because some variables matter more than others. Uniform importance across unrelated variables is the signature of a model splitting on noise, which is what a synthetic dataset with randomly assigned labels produces.</p>
+<p>The training script is <b>still in the repository</b>, along with its metrics file. It is kept deliberately as the evidence for the rejection — deleting it would leave the decision undocumented.</p>
+<div class="callout"><b>This is a strength, not an admission.</b> Shipping a 0.496 model labelled "flood risk prediction" would have looked more impressive on a slide and been actively dangerous. Detecting that a dataset is unusable is a real skill, and the alternative model was found and trained instead.</div></div></div>
+
+<div class="qa"><div class="num">5.3</div>
+<div class="q">Why GroupKFold instead of ordinary cross-validation? <span class="flag core">core</span></div>
+<div class="a"><p>Because the 4,548 events come from only 155 catchments — roughly 29 events per catchment. Under random splitting, events from the same gauge appear in both train and test folds, so the model can memorise a catchment's typical behaviour and score well without generalising. That is optimistic leakage.</p>
+<p>Grouping by <code>GaugeID</code> guarantees every catchment in the test fold is one the model has never seen — which is exactly the situation it faces when scoring a district live. The reported 0.575 is therefore the honest number.</p></div></div>
+
+<div class="qa"><div class="num">5.4</div>
+<div class="q">Your in-sample ROC-AUC is 0.967 but cross-validated it is 0.575. Isn't that massive overfitting? <span class="flag hard">hard</span></div>
+<div class="a"><p>Yes, and that gap is precisely why the cross-validated figure is the one reported everywhere — in the metrics file, in <code>/predictions/model</code>, and in the API response. A gradient-boosted ensemble with 300 iterations will fit training data very closely; the in-sample number is recorded only to make the contrast visible, and is explicitly labelled "optimistic, for reference only" in the training output.</p>
+<p>Reducing the gap would mean stronger regularisation, fewer iterations, or early stopping on a grouped validation fold. That is a legitimate next step, though on a signal this weak it would likely trade in-sample fit for very little out-of-sample gain.</p></div></div>
+
+<div class="qa"><div class="num">5.5</div>
+<div class="q">ROC-AUC 0.575 is barely above chance. Why ship it at all? <span class="flag hard">hard</span></div>
+<div class="a"><p>Three reasons, and the honesty of the framing matters more than the number.</p>
+<ul>
+<li>It is <b>consistently</b> above chance across five grouped folds on real gauged data, unlike the rejected dataset which sat at chance. A weak real signal is a different thing from no signal.</li>
+<li>It is weighted at only <b>25%</b> of the risk score. The headline number is driven by IMD's published thresholds.</li>
+<li>Its limitation is stated in the model metrics, returned in every prediction response, and surfaced through the API — a reviewer does not have to discover it.</li>
+</ul>
+<p>The alternative — omitting ML entirely — would have been defensible. Presenting 0.575 as if it were 0.95 would not.</p></div></div>
+
+<div class="qa"><div class="num">5.6</div>
+<div class="q">What features does the served model use, and why those?</div>
+<div class="a"><p>Ten observed rainfall accumulations (<code>T1d</code>…<code>T10d</code>), a month term for seasonality, and three engineered ratios:</p>
+<ul>
+<li><code>burst_1_3</code> — day-1 rain as a fraction of 3-day rain</li>
+<li><code>burst_3_10</code> — 3-day as a fraction of 10-day</li>
+<li><code>late_accum</code> — 10-day total minus 3-day total</li>
+</ul>
+<p>The burst ratios exist because the same 10-day total behaves very differently depending on its shape. 200&nbsp;mm falling in one afternoon onto dry ground produces flash flooding; the same 200&nbsp;mm spread over ten days largely infiltrates. A model given only totals cannot distinguish those two cases.</p></div></div>
+
+<div class="qa"><div class="num">5.7</div>
+<div class="q">You had catchment attributes that raised AUC to 0.611. Why aren't you using them? <span class="flag hard">hard</span></div>
+<div class="a"><p>Because they cannot be resolved at inference time. Catchment characteristics — drainage area, relief ratio, stream order — are keyed to IndoFloods gauge IDs. For an arbitrary district there is no mapping from that district to a gauge, so serving that variant would require fabricating catchment attributes for live locations.</p>
+<p>A model that scores 0.611 on inputs you cannot supply is worth less than one that scores 0.575 on inputs you can. Both variants are trained and both numbers are recorded; the served one is the honest choice. Unlocking 0.611 requires the CWC station registry, which is on the backlog.</p></div></div>
+
+<div class="qa"><div class="num">5.8</div>
+<div class="q">Did you check for target leakage?</div>
+<div class="a"><p>Yes, and it changed the feature set. <code>Peak Flood Level</code> and <code>Peak Discharge</code> are available in the events table and would raise the score substantially — but "Severe Flood" is almost certainly labelled <i>from</i> peak level. Including them would be predicting the label from a proxy for itself.</p>
+<p>Both are excluded. The model sees only rainfall that fell <b>before</b> the outcome, which is also the only information available when forecasting. Latitude and longitude were excluded from the earlier model for a related reason — raw coordinates invite memorising locations rather than learning hydrology.</p></div></div>
+
+<div class="qa"><div class="num">5.9</div>
+<div class="q">Live data doesn't give you T1d…T10d. How do you bridge that? <span class="flag hard">hard</span></div>
+<div class="a"><p>By anchoring and interpolating, and then saying so in the response. IMD supplies a daily total, a weekly total and a cumulative total. Those become the day-1, day-7 and day-10 anchors; the intermediate days are linearly interpolated, and accumulations are kept monotonically non-decreasing.</p>
+<p>This is an approximation, so <code>/predictions</code> returns a <code>feature_provenance</code> map marking every feature as <b>observed</b>, <b>interpolated</b> or <b>imputed</b>. If no live rainfall exists for a district, the training medians are used and labelled as imputed. The consumer can therefore see how much of any given score rests on real measurement.</p></div></div>
+
+<div class="qa"><div class="num">5.10</div>
+<div class="q">How would you actually improve this model?</div>
+<div class="a"><ul>
+<li><b>Wire CWC.</b> River level and discharge are the physically causal variables for flooding; rainfall alone is an upstream proxy. This is the single largest available gain.</li>
+<li><b>Resolve catchments</b> for live districts, unlocking the 0.611 feature set.</li>
+<li><b>Add antecedent soil moisture</b> — the same rainfall floods saturated ground and not dry ground, and this is the main physical driver the current features cannot see.</li>
+<li><b>Regularise harder</b> to close the 0.967 / 0.575 gap.</li>
+<li><b>Calibrate probabilities</b> (Platt or isotonic) so a "60%" means what it says, which matters if the number ever drives a decision threshold.</li>
+</ul></div></div>
+
+<div class="qa"><div class="num">5.11</div>
+<div class="q">Why not deep learning?</div>
+<div class="a"><p>4,548 rows with 14 features is firmly in gradient-boosting territory. A neural network would have more parameters than the dataset can constrain, and would almost certainly do worse while being harder to explain. On tabular data of this size, boosted trees are the stronger baseline — and given the signal is weak, the priority is better <i>features</i>, not a larger model class.</p></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">6 · Retrieval-Augmented Generation</h3>
+<p class="section-note">Expect questions on why RAG rather than fine-tuning, and on how hallucination is prevented.</p>
+
+<div class="qa"><div class="num">6.1</div>
+<div class="q">Describe your RAG pipeline end to end. <span class="flag core">core</span></div>
+<div class="a"><p>Eight official PDFs from NDMA, IMD and NDRF are parsed page by page with PyMuPDF. Text is cleaned and chunked paragraph-aware at roughly 1,200 characters with 200 characters of overlap, and each chunk keeps its source file, document title and page number. Chunks are embedded with ChromaDB's bundled ONNX MiniLM and stored with cosine distance — <b>2,677 chunks</b> in total.</p>
+<p>At query time the system runs hybrid retrieval, filters for duplicates and document diversity, and passes the surviving passages to Gemini with a system prompt requiring it to answer only from that context and cite each claim as <code>[Title, p.N]</code>.</p></div></div>
+
+<div class="qa"><div class="num">6.2</div>
+<div class="q">Why RAG rather than fine-tuning a model on these documents? <span class="flag core">core</span></div>
+<div class="a"><p>Because the requirement is <b>citation</b>, not fluency. An official acting on evacuation guidance needs to know which document and page it came from, so it can be verified — a fine-tuned model absorbs the text into weights and can produce plausible guidance with no traceable source. RAG also updates by re-indexing when NDMA publishes a revision, whereas fine-tuning would require retraining. And on a corpus of eight documents there is nowhere near enough text to fine-tune usefully.</p></div></div>
+
+<div class="qa"><div class="num">6.3</div>
+<div class="q">Why did you write a second ingestion script instead of using the existing one? <span class="flag hard">hard</span></div>
+<div class="a"><p>The original <code>ingest.py</code> is the higher-quality path: <code>unstructured</code> in hi-res mode with Tesseract OCR, table extraction to HTML, and a vision LLM captioning every chart and map. It also needs system binaries installed and takes 30–45 minutes.</p>
+<p><code>fast_ingest.py</code> pulls the embedded text layer with PyMuPDF and embeds locally — about two minutes, no OCR, no API key, no torch. The tradeoff is stated in the file's docstring: <b>text inside scanned pages and charts is not captured</b>. All eight documents in this corpus have usable text layers, so nothing was lost here, but for a scanned document the OCR path remains the correct tool. Both are kept.</p></div></div>
+
+<div class="qa"><div class="num">6.4</div>
+<div class="q">Why 1,200-character chunks with 200 overlap?</div>
+<div class="a"><p>Large enough to hold a complete procedural clause — evacuation steps lose meaning split across chunks — and small enough that five of them fit comfortably in a prompt without diluting the relevant passage. The overlap prevents a rule being cut exactly at a boundary. Chunking is paragraph-aware first and only falls back to a hard sliding window for a single oversized paragraph, so clause boundaries are respected where they exist.</p></div></div>
+
+<div class="qa"><div class="num">6.5</div>
+<div class="q">You use hybrid retrieval. What was wrong with pure vector search? <span class="flag hard">hard</span></div>
+<div class="a"><p>A concrete failure exposed it. Asked <i>"What does an Orange IMD warning mean?"</i>, pure vector search returned four near-identical chunks — the same page footer <i>("Red color warning means Take Action")</i> reprinted on pages 5, 20, 24 and 25 of one bulletin. Gemini correctly answered that the context did not contain the answer.</p>
+<p>But the answer <b>was</b> in the corpus: IMD SOP page 29, Table 1.11, defines the colour criteria explicitly. MiniLM simply ranked a topically-similar disclaimer above a criteria table whose surrounding language looks nothing like the question.</p>
+<p>The fix has three parts:</p>
+<ul>
+<li><b>Keyword pass</b> — salient query terms are matched literally against chunk text and merged with the vector hits, each matched term adding 0.12 to that passage's score.</li>
+<li><b>Near-duplicate filtering</b> — a normalised 160-character fingerprint drops boilerplate reprinted across pages.</li>
+<li><b>Per-document cap</b> — at most two passages from any one PDF, so a single document cannot fill the context.</li>
+</ul>
+<p>After the change the same question returns SOP pp. 29 and 263 and yields a correct, cited answer.</p></div></div>
+
+<div class="qa"><div class="num">6.6</div>
+<div class="q">How do you prevent the model hallucinating? <span class="flag core">core</span></div>
+<div class="a"><p>Four layers. The system prompt instructs the model to answer <b>only</b> from the supplied context and to say plainly when the answer is absent. It must cite <code>[Title, p.N]</code> after each claim, which makes an invented statement visibly unsupported. It is explicitly told never to invent phone numbers, thresholds or procedures — the specific things most dangerous to fabricate in a disaster context. And temperature is 0.2 rather than a creative setting.</p>
+<p>The behaviour is observable: before the retrieval fix, the model <i>did</i> say the context did not contain the answer rather than inventing one. That refusal was evidence the grounding works.</p></div></div>
+
+<div class="qa"><div class="num">6.7</div>
+<div class="q">What happens if there is no Gemini key, or the call fails?</div>
+<div class="a"><p>Retrieval still runs and the top passages are returned verbatim, labelled as unsummarised source text rather than presented as an answer. Retrieval is the part that must always work; generation is a convenience layer over it.</p>
+<p>Importantly, a <b>failing</b> key is treated differently from <b>no</b> key. The client surfaces Google's actual error message and tags a reason — <code>bad_key</code>, <code>bad_model</code>, <code>rate_limited</code>, <code>blocked</code>, <code>truncated</code> — and the chat interface shows a red banner. An earlier version reported every failure identically, so a mistyped key looked like an intentional no-key configuration.</p></div></div>
+
+<div class="qa"><div class="num">6.8</div>
+<div class="q">How would you evaluate retrieval quality properly? <span class="flag hard">hard</span></div>
+<div class="a"><p>Currently it is evaluated by spot-checking, which is a genuine weakness. A proper evaluation would need a labelled set of maybe 50 questions with known correct source pages, then measuring <b>recall@k</b> (does the right page appear in the top k) and <b>MRR</b>. Answer quality would need faithfulness scoring — checking each generated claim is supported by a cited passage — which frameworks like RAGAS automate.</p>
+<p>Without that harness, the hybrid-retrieval change is justified by a single reproducible failure case rather than by an aggregate metric. That is honest but not sufficient for production.</p></div></div>
+
+<div class="qa"><div class="num">6.9</div>
+<div class="q">Why ChromaDB and a local embedding model?</div>
+<div class="a"><p>Chroma is embedded — no server to run — and persists to a directory, which suits a store rebuilt from source PDFs. Its bundled ONNX MiniLM is the deciding factor: embeddings run locally, so there is <b>no embedding API key and no per-query cost</b>, and the 80&nbsp;MB ONNX runtime avoids pulling in PyTorch. For 2,677 chunks this is comfortably fast. At millions of chunks the answer would change to pgvector or a dedicated vector database, which also matches the architecture document's stated Postgres direction.</p></div></div>
+
+<div class="qa"><div class="num">6.10</div>
+<div class="q">Why do greetings get a different response path?</div>
+<div class="a"><p>Because running semantic search on "Hi" returns whichever passage happens to be least dissimilar to it, which reads as broken. Greetings and pleasantries are detected and answered with a short capability statement instead. This also fixed a validation bug: the endpoint originally required a three-character minimum, so "Hi" returned HTTP 422 — rejecting a greeting with a validation error is a worse answer than replying to it.</p></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">7 · LLM Integration</h3>
+
+<div class="qa"><div class="num">7.1</div>
+<div class="q">Why a raw REST client rather than the Google SDK?</div>
+<div class="a"><p>The surface actually needed is a single <code>generateContent</code> POST. A thin <code>httpx</code> wrapper is one dependency fewer, makes the retry and error-classification logic explicit rather than hidden inside a library, and keeps the failure modes visible — which mattered, because carrying the real error message to the user was a specific requirement.</p></div></div>
+
+<div class="qa"><div class="num">7.2</div>
+<div class="q">What is <code>thinkingBudget: 0</code> doing?</div>
+<div class="a"><p>Gemini 2.5 models perform extended reasoning before producing output, and that reasoning consumes the output token allowance. For short grounded answers over retrieved passages the budget can be spent before any text is emitted, yielding a 200 response with empty content. Setting it to zero disables that. Gemini 2.5 Pro rejects a zero budget, so a 400 mentioning "thinking" triggers one retry with the field removed.</p></div></div>
+
+<div class="qa"><div class="num">7.3</div>
+<div class="q">How do you handle rate limits and transient failures?</div>
+<div class="a"><p>429 and 5xx responses are retried up to three times with exponential backoff, since free-tier rate limits are common. Authentication and model-name errors are <b>not</b> retried — they will never succeed, and retrying only delays a clear error message. A 200 with no text is classified separately into safety-block, truncation or empty, because those need different fixes.</p></div></div>
+
+<div class="qa"><div class="num">7.4</div>
+<div class="q">How does the AI event summary avoid inventing facts?</div>
+<div class="a"><p>It is generated from the event's own <b>evidence trail</b> — the list of attached observations with their trigger reasons and weights — plus the computed confidence, severity and risk. The prompt restricts it to that evidence and asks it to state confidence honestly, including when the evidence is thin. Because the input is the same record shown in the UI, a reader can check the summary against what it was built from.</p></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">8 · Backend, Frontend &amp; Realtime</h3>
+
+<div class="qa"><div class="num">8.1</div>
+<div class="q">Why SQLite? Isn't that a toy database? <span class="flag hard">hard</span></div>
+<div class="a"><p>It is the right choice for the current write volume — one collection cycle a minute — and it needs no setup, which matters for a project that has to be runnable by someone else in minutes. The important point is that nothing is <i>coupled</i> to it: every model is plain SQLAlchemy 2.0 and the migration to PostgreSQL is a <code>DATABASE_URL</code> change, which the config file documents. The architecture document specifies Postgres with pgvector for production, and the schema was written to move.</p></div></div>
+
+<div class="qa"><div class="num">8.2</div>
+<div class="q">Why Server-Sent Events instead of WebSockets? <span class="flag core">core</span></div>
+<div class="a"><p>The traffic is entirely one-directional — the server announces that new data exists, the browser never pushes back. SSE is plain HTTP, so it passes through proxies and load balancers that need special configuration for WebSocket upgrades, and <code>EventSource</code> reconnects automatically, so there is no retry logic to write or get wrong. WebSockets would add bidirectional capability that nothing uses.</p>
+<p>Measured latency from cycle completion to browser push is <b>0.42 s</b>. A 60-second poll remains as a fallback, and the header shows whether the stream is connected.</p></div></div>
+
+<div class="qa"><div class="num">8.3</div>
+<div class="q">A slow client could back up your event stream. How is that handled?</div>
+<div class="a"><p>Each connected browser gets its own bounded queue of eight messages. If a client falls behind, <code>put_nowait</code> raises and that update is dropped for that client only — it does not block the publisher or grow memory without limit. Since each message is only a signal to refetch, a dropped one is harmless: the next one triggers the same refresh. A 20-second keep-alive comment prevents idle proxies closing the connection.</p></div></div>
+
+<div class="qa"><div class="num">8.4</div>
+<div class="q">How does the frontend share state across pages?</div>
+<div class="a"><p>A React context provider mounted once in the root layout owns the selected district, its live data, connection state and theme. The earlier Vite build threaded these through a router component into all nine pages as props; in the App Router there is no shared parent to drill through, and re-fetching per page would be wasteful. The provider persists across navigations, so switching pages does not re-fetch.</p></div></div>
+
+<div class="qa"><div class="num">8.5</div>
+<div class="q">You said the events panel wasn't realtime. What was wrong? <span class="flag hard">hard</span></div>
+<div class="a"><p>The Current Floods page has two halves. The top read from the shared context and updated on the SSE signal. The <b>Correlated Flood Events</b> panel below used its own hook with a 60-second poll and ignored the stream entirely — so one half of a single page could be a minute behind the other.</p>
+<p>The fix was to have the context publish a <code>cycle</code> counter from the one shared EventSource, and have the events hook depend on it. Deliberately <i>not</i> a second EventSource per component: browsers cap concurrent connections per origin, and one stream already carries the signal.</p></div></div>
+
+<div class="qa"><div class="num">8.6</div>
+<div class="q">How are locations handled now that they are not hardcoded?</div>
+<div class="a"><p>Originally a static list of seven districts, seeded from what the IMD mock reports. That was appropriate while IMD was the only source, but OpenWeather works at any coordinate, so the limit had become artificial.</p>
+<p>Now <code>/districts/search</code> geocodes any place, <code>/districts/track</code> persists it, and the collector picks it up on the next cycle with no restart. A tracked location gets live weather but <b>not</b> IMD warnings, so the response sets <code>imd_covered: false</code>, the IMD slots are nulled rather than left empty, and the UI marks it "Live weather only" — otherwise a blank panel reads as data that has not arrived yet.</p></div></div>
+
+<div class="qa"><div class="num">8.7</div>
+<div class="q">"Use my location" once reported the wrong place. What happened? <span class="flag hard">hard</span></div>
+<div class="a"><p>It compared the GPS fix against the seven followed districts and picked the nearest. From Telangana, Wayanad in Kerala genuinely <i>is</i> the closest of those seven — so the answer was the closest known point, and wrong.</p>
+<p>It now reverse-geocodes the actual coordinates through OpenWeather, follows that place if it is new, and switches to it. The nearest-neighbour code was deleted rather than patched, because the approach itself was the bug.</p></div></div>
+</div>
+
+<div class="section-wrap">
+<h3 class="section">9 · Critical &amp; Uncomfortable Questions</h3>
+<p class="section-note">These decide the grade. Each is answerable — but only by conceding the real limitation first and then showing it was a considered decision.</p>
+
+<div class="qa"><div class="num">9.1</div>
+<div class="q">IMD is a mock server. Is any of this real? <span class="flag hard">hard</span></div>
+<div class="a"><p>Part of it is genuinely live and part is simulated, and the interface says which is which.</p>
+<p><b>Real:</b> OpenWeather observed conditions and five-day forecasts at real coordinates for every followed location; the 2,677 chunks are from genuine NDMA, IMD and NDRF publications; the model is trained on 4,548 real gauged flood events; Gemini answers are real.</p>
+<p><b>Simulated:</b> IMD warnings, nowcasts and district rainfall, because the real API requires government credentials that are still pending.</p>
+<p>The mock replicates the real endpoint contracts documented in <code>imd_api_reference.md</code>, so switching over is a change of <code>IMD_BASE_URL</code> plus an auth header. Crucially, the UI badges live figures <code>LIVE</code> and marks IMD-uncovered locations, so a mocked number is never presented with the same authority as a measured one.</p></div></div>
+
+<div class="qa"><div class="num">9.2</div>
+<div class="q">What is the weakest part of this project? <span class="flag hard">hard</span></div>
+<div class="a"><p>The ML model. ROC-AUC 0.575 on unseen catchments is a weak signal, and the reason is structural rather than a modelling mistake: rainfall alone is an upstream proxy for flooding. The causal variables — river level, discharge, soil moisture, reservoir storage — come from CWC, which is not yet integrated. Until that data exists, no amount of model tuning closes the gap.</p>
+<p>The mitigation is architectural: the model contributes 25% of the risk score, not 100%, and its cross-validated score travels with every prediction the API returns.</p></div></div>
+
+<div class="qa"><div class="num">9.3</div>
+<div class="q">What would break first if this went into real use? <span class="flag hard">hard</span></div>
+<div class="a"><ul>
+<li><b>SQLite write contention</b> once collection frequency or district count rises materially.</li>
+<li><b>In-memory SSE subscribers.</b> Multiple API replicas would each hold their own subscriber set, so a client connected to replica A would miss a cycle completed on replica B. Fixing that needs Redis pub/sub.</li>
+<li><b>OpenWeather quota.</b> Two calls per location per cycle; at 60-second intervals the free 60-per-minute limit is reached at about 30 locations.</li>
+<li><b>No authentication.</b> Every endpoint is open, including the ones that write.</li>
+<li><b>District-name matching</b> would fragment as coverage grows and spellings diverge.</li>
+</ul></div></div>
+
+<div class="qa"><div class="num">9.4</div>
+<div class="q">What are the security concerns? <span class="flag hard">hard</span></div>
+<div class="a"><p>The honest answer is that there is no auth layer, and the fake Logout button was removed rather than left implying one exists. Keys live in a gitignored <code>.env</code> and never reach the client bundle, since the browser only calls same-origin <code>/api/*</code>. Input is validated by Pydantic and all database access goes through the SQLAlchemy ORM, so injection is not a live concern.</p>
+<p>What is missing before real deployment: authentication and authorisation, rate limiting on the write endpoints, and CORS narrowed from its current development configuration.</p></div></div>
+
+<div class="qa"><div class="num">9.5</div>
+<div class="q">How do you know any of this works? What testing exists? <span class="flag hard">hard</span></div>
+<div class="a"><p>Verification has been by direct exercise of the running system rather than an automated suite, and that is the main engineering gap. What was verified:</p>
+<ul>
+<li>Trigger rules exercised across every severity band with synthetic observations.</li>
+<li>The full realtime chain proved end to end — a district switched to Red in the source was detected by the scheduler unattended, opened a <code>severe/active</code> event at 0.98 confidence from three independent pieces of evidence, was scored, summarised and pushed to the stream in 0.42&nbsp;s.</li>
+<li>Every error path of the chat client unit-checked: network down, 422, 503, opaque 500, object-shaped detail.</li>
+<li>Model evaluation via grouped cross-validation rather than a single split.</li>
+</ul>
+<p>What is missing: pytest coverage of the correlation engine, a retrieval-quality harness, and frontend component tests. The correlation engine is the priority — it holds the most conditional logic and the most subtle bugs.</p></div></div>
+
+<div class="qa"><div class="num">9.6</div>
+<div class="q">Tell me about a bug you found and fixed. <span class="flag core">core</span></div>
+<div class="a"><p>Several, and they are worth having ready because they demonstrate the system was actually exercised rather than merely assembled.</p>
+<ul>
+<li><b>Evidence double-counting.</b> One basin forecast split across four sub-basins inflated confidence from 0.25 to 0.85. Fixed with per-type diminishing returns; the event correctly settled at 0.53.</li>
+<li><b>A count that could not see its own writes.</b> The diminishing-returns fix silently did nothing at first — the session runs with <code>autoflush=False</code>, so the query counting existing evidence could not see rows added earlier in the same batch. Every contribution was being treated as the first of its type.</li>
+<li><b>A permanently paused scheduler.</b> <code>next_run_time=None</code> in APScheduler means <i>paused</i>, so the timer would never have fired in production.</li>
+<li><b>Prediction rows all showing one date.</b> IMD's QPF response is a list of sub-basins, not days; the code read one day per sub-basin and stamped them all with the same issue date.</li>
+<li><b>A timezone off-by-one.</b> <code>toISOString()</code> converts local midnight to UTC, shifting every forecast date back a day.</li>
+</ul></div></div>
+
+<div class="qa"><div class="num">9.7</div>
+<div class="q">If you had another month, what would you build?</div>
+<div class="a"><ol>
+<li><b>CWC integration</b> — river levels and discharge. It improves the model, replaces the estimated river-level figures currently labelled as proxies, and is the single highest-value gap.</li>
+<li><b>A test suite</b>, starting with the correlation engine.</li>
+<li><b>A retrieval evaluation harness</b> so RAG changes are justified by metrics rather than by anecdote.</li>
+<li><b>Authentication</b> and per-user saved locations with notifications.</li>
+<li><b>Map visualisation</b> — Leaflet with events, stations and basin layers, which the design document specifies and which is a real gap for a geographic product.</li>
+<li><b>Postgres with pgvector</b>, consolidating relational and vector storage.</li>
+</ol></div></div>
+
+<div class="qa"><div class="num">9.8</div>
+<div class="q">What did you learn?</div>
+<div class="a"><p>The most valuable lesson was that <b>verifying data quality precedes modelling</b>. It would have been easy to train on the 10,000-row dataset, report accuracy near 50% as though it were a starting point, and never look at the feature importances. Recognising that uniform importance meant random labels — and then finding a genuinely usable dataset instead — mattered more than any tuning that followed.</p>
+<p>The second was that <b>honest interfaces are a design requirement, not decoration</b>. Marking live data <code>LIVE</code>, labelling interpolated features, showing why an event exists, and reporting a weak AUC alongside the number it produces all make the system trustworthy in a way that a higher headline figure would not.</p></div></div>
+</div>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Dataset Analysis
 
-Do not clean the data yet. This document records the first-pass audit for each CSV in `datasets/raw/ml/`.
+Do not clean the data yet. This document records the first-pass audit for each CSV in `data/raw/ml/`.
 
 | Dataset | Rows | Columns | Target Variable | Missing Values | Duplicates | Comments |
 | --- | ---: | ---: | --- | ---: | ---: | --- |

@@ -1,0 +1,79 @@
+{
+  "model_version": "flood_risk_rf_v1",
+  "n_rows": 10000,
+  "positive_rate": 0.5057,
+  "holdout_accuracy": 0.497,
+  "holdout_roc_auc": 0.49578498998378806,
+  "cv_roc_auc_mean": 0.5140843403111768,
+  "cv_roc_auc_std": 0.006416962038593652,
+  "numeric_features": [
+    "Rainfall (mm)",
+    "Temperature (\u00b0C)",
+    "Humidity (%)",
+    "River Discharge (m\u00b3/s)",
+    "Water Level (m)",
+    "Elevation (m)",
+    "Population Density",
+    "Infrastructure",
+    "Historical Floods"
+  ],
+  "categorical_features": [
+    "Land Cover",
+    "Soil Type"
+  ],
+  "inference_defaults": {
+    "Rainfall (mm)": 150.6204,
+    "Temperature (\u00b0C)": 30.0009,
+    "Humidity (%)": 59.4974,
+    "River Discharge (m\u00b3/s)": 2530.4519,
+    "Water Level (m)": 5.0421,
+    "Elevation (m)": 4417.1998,
+    "Population Density": 5074.3929,
+    "Infrastructure": 1.0,
+    "Historical Floods": 0.0,
+    "Land Cover": "Water Body",
+    "Soil Type": "Peat"
+  },
+  "top_features": [
+    {
+      "feature": "Water Level (m)",
+      "importance": 0.12919785830889532
+    },
+    {
+      "feature": "Temperature (\u00b0C)",
+      "importance": 0.12751727035575589
+    },
+    {
+      "feature": "Humidity (%)",
+      "importance": 0.12686897605630126
+    },
+    {
+      "feature": "River Discharge (m\u00b3/s)",
+      "importance": 0.12683809080902805
+    },
+    {
+      "feature": "Rainfall (mm)",
+      "importance": 0.12289343337796273
+    },
+    {
+      "feature": "Elevation (m)",
+      "importance": 0.12131315777297179
+    },
+    {
+      "feature": "Population Density",
+      "importance": 0.1207514131390153
+    },
+    {
+      "feature": "Infrastructure",
+      "importance": 0.016807803281526833
+    },
+    {
+      "feature": "Historical Floods",
+      "importance": 0.016349713741695103
+    },
+    {
+      "feature": "Land Cover_Water Body",
+      "importance": 0.009974326572526471
+    }
+  ]
+}

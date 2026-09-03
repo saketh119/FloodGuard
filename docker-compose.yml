@@ -1,54 +1,29 @@
-version: "3.8"
+# Development topology. Mirrors what `make mock` / `make api` / `make web` run locally.
+# Images are not built yet — see deploy/ for the production path.
+version: "3.9"
+
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app
-    environment:
-      - DATABASE_URL=sqlite+aiosqlite:////app/floodguard.db
-    restart: unless-stopped
-
   mock-imd:
-    build: ./backend
-    command: python scripts/mock_imd_server.py
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./backend:/app
+    build: { context: ., dockerfile: deploy/mock-imd.Dockerfile }
+    command: uvicorn mock_imd_server:app --host 0.0.0.0 --port 8080 --app-dir apps/mock-imd
+    ports: ["8080:8080"]
 
-  mock-cwc:
-    build: ./backend
-    command: python scripts/mock_cwc_server.py
-    ports:
-      - "8081:8081"
-    volumes:
-      - ./backend:/app
-
-  mock-weather:
-    build: ./backend
-    command: python scripts/mock_weather_server.py
-    ports:
-      - "8082:8082"
-    volumes:
-      - ./backend:/app
-
-  mock-rss:
-    build: ./backend
-    command: python scripts/mock_rss_server.py
-    ports:
-      - "8083:8083"
-    volumes:
-      - ./backend:/app
-
-  frontend:
-    image: node:20
-    working_dir: /app
-    volumes:
-      - ./dashboard:/app
-    ports:
-      - "5173:5173"
-    command: npm run dev
+  api:
+    build: { context: ., dockerfile: deploy/api.Dockerfile }
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    working_dir: /srv/apps/api
     environment:
-      - VITE_API_URL=http://localhost:8000/api/v1
+      IMD_BASE_URL: http://mock-imd:8080
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    volumes:
+      - ./services/ml/models:/srv/services/ml/models:ro
+      - ./services/rag/chroma_db:/srv/services/rag/chroma_db:ro
+    ports: ["8000:8000"]
+    depends_on: [mock-imd]
+
+  web:
+    build: { context: ., dockerfile: deploy/web.Dockerfile }
+    environment:
+      FLOODGUARD_API_BASE: http://api:8000
+    ports: ["3000:3000"]
+    depends_on: [api]

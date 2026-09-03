@@ -1,0 +1,19 @@
+# FloodGuard backend — FastAPI gateway + ingestion + ML + RAG
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+sqlalchemy==2.0.36
+pydantic==2.10.4
+pydantic-settings==2.7.0
+python-dotenv==1.0.1
+httpx==0.28.1
+apscheduler==3.11.0
+
+# ML
+pandas==2.2.3
+scikit-learn==1.6.0
+joblib==1.4.2
+numpy==2.2.1
+
+# RAG
+chromadb==0.6.3
+pymupdf==1.25.1

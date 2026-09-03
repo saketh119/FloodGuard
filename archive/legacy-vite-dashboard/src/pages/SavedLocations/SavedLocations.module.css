@@ -1,0 +1,31 @@
+.page { padding: 28px; display: flex; flex-direction: column; gap: 24px; max-width: 1000px; margin: 0 auto; }
+.title { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 6px; }
+.section {}
+.sectionTitle { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+.savedGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.savedCard { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 10px; }
+.activeCard { border-color: var(--brand); box-shadow: 0 0 0 2px rgba(37,99,235,.15); }
+.cardTop { display: flex; justify-content: space-between; align-items: flex-start; }
+.locName { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.locState { font-size: 11px; color: var(--text-muted); }
+.alertBadge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 12px; text-transform: uppercase; }
+.danger  { background: var(--danger-sub);  color: var(--danger); }
+.warning { background: var(--warning-sub); color: var(--warning); }
+.success { background: var(--success-sub); color: var(--success); }
+.coords { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
+.rain24h { font-size: 12px; color: var(--text-secondary); }
+.rain24h strong { color: var(--text-primary); }
+.cardActions { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.viewBtn { flex: 1; padding: 8px; background: var(--brand); color: #fff; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; border: none; transition: background var(--transition); }
+.viewBtn:hover { background: var(--brand-hover); }
+.removeBtn { padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; transition: all var(--transition); background: var(--bg-card); }
+.removeBtn:hover { border-color: var(--danger); color: var(--danger); background: var(--danger-sub); }
+.empty { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 50px; color: var(--text-secondary); text-align: center; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); }
+.empty strong { font-size: 15px; color: var(--text-primary); }
+.addGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.addCard { background: var(--bg-card); border: 1px dashed var(--border); border-radius: var(--radius-md); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; }
+.addBtn { display: flex; align-items: center; gap: 6px; padding: 7px 14px; background: var(--brand-subtle); color: var(--brand); border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; border: none; transition: background var(--transition); }
+.addBtn:hover { background: var(--brand); color: #fff; }
+.allSaved { color: var(--text-muted); font-size: 13px; }
+@media(max-width:800px) { .savedGrid { grid-template-columns: 1fr 1fr; } .addGrid { grid-template-columns: 1fr 1fr; } }
